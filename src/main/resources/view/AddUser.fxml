@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.edu.agh.controller.AddUserController"
+            prefWidth="400" prefHeight="400">
+    <center>
+        <VBox alignment="CENTER"
+              maxHeight="300"
+              maxWidth="350"
+              style="-fx-background-color: #056490;">
+
+            <VBox alignment="CENTER"
+                  spacing="10"
+                  maxWidth="300">
+
+                <Label text="Imię:"/>
+                <TextField fx:id="firstNameField" promptText="Wprowadź imię"/>
+
+                <Label text="Nazwisko:"/>
+                <TextField fx:id="lastNameField" promptText="Wprowadź nazwisko"/>
+
+                <Label text="E-mail:"/>
+                <TextField fx:id="emailField" promptText="Wprowadź e-mail"/>
+
+                <Button text="Dodaj" onAction="#addUser"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

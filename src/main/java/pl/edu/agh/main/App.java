@@ -1,15 +1,16 @@
 package pl.edu.agh.main;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import pl.edu.agh.controller.AddUserController;
 
-public class App extends Application  {
+public class App extends Application {
+
     @Override
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(new Label("test"));
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        AddUserController addUserController = new AddUserController(primaryStage);
+        addUserController.initRootLayout();
+
     }
 }
