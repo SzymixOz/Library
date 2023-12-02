@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import pl.edu.agh.validator.UserValidator;
 
 import java.io.IOException;
 
@@ -20,8 +21,9 @@ public class AddUserController {
     private TextField lastNameField;
 
     @FXML
-    private TextField emailField;
+    private TextField mailField;
 
+    // DON'T REMOVE THIS
     public AddUserController() {
     }
 
@@ -50,11 +52,46 @@ public class AddUserController {
         }
     }
 
+
     public void addUser() {
+        if (!isUserValid()) {
+            return;
+        }
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
-        String email = emailField.getText();
+        String email = mailField.getText();
+
+
         System.out.println(firstName + lastName + email);
+        // HERE SAVE IN DATABASE
+
+        firstNameField.setText("");
+        lastNameField.setText("");
+        mailField.setText("");
     }
 
+    private boolean isUserValid() {
+        boolean valid = UserValidator.isFirstNameValid(firstNameField.getText());
+        if (!valid) {
+            showError("Niepoprawne imie");
+            return false;
+        }
+        valid = UserValidator.isLastNameValid(lastNameField.getText());
+        if (!valid) {
+            showError("Niepoprawne nazwisko");
+            return false;
+        }
+        valid = UserValidator.isMailValid(mailField.getText());
+        if (!valid) {
+            showError("Niepoprawny mail");
+            return false;
+        }
+        return true;
+    }
+
+
+    private void showError(String label){
+        //    TO IMPLEMENT
+        System.out.println("BLAD " + label);
+    }
 }

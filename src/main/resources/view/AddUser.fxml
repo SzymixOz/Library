@@ -24,7 +24,7 @@
                 <TextField fx:id="lastNameField" promptText="Wprowadź nazwisko"/>
 
                 <Label text="E-mail:"/>
-                <TextField fx:id="emailField" promptText="Wprowadź e-mail"/>
+                <TextField fx:id="mailField" promptText="Wprowadź e-mail"/>
 
                 <Button text="Dodaj" onAction="#addUser"/>
             </VBox>
