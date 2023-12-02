@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.example;
+package pl.edu.agh.main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
