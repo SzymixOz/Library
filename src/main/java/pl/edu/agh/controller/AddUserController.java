@@ -3,6 +3,7 @@ package pl.edu.agh.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -22,6 +23,8 @@ public class AddUserController {
 
     @FXML
     private TextField mailField;
+    @FXML
+    private Label resultLabel;
 
     // DON'T REMOVE THIS
     public AddUserController() {
@@ -52,8 +55,9 @@ public class AddUserController {
         }
     }
 
-
-    public void addUser() {
+    @FXML
+    public void handleAddUserAction() {
+        resultLabel.setText(null);
         if (!isUserValid()) {
             return;
         }
@@ -64,34 +68,52 @@ public class AddUserController {
 
         System.out.println(firstName + lastName + email);
         // HERE SAVE IN DATABASE
+//        TO DO:
+//        Utworzyc commanda/servis ktory bedzie ogarnial dodanie usera
+//        przekleic z controllera validacje do commanda/servisu
+//        dodatkowo dodac jeszcze validacje sprawdzajaca czy dany email jest juz w bazie danych
+//        dobrze by bylo jakby command do controllera zwracal jakiegos enuma
+//        i na podstawie tego enuma by byly wyswietlane odpowiednie komunikaty:
+//        "Uzytkownik zostal dodany" / "niepoprawne imie" ...
 
-        firstNameField.setText("");
-        lastNameField.setText("");
-        mailField.setText("");
+        showResult("Uzytkownik zostal dodany", false);
     }
 
     private boolean isUserValid() {
         boolean valid = UserValidator.isFirstNameValid(firstNameField.getText());
         if (!valid) {
-            showError("Niepoprawne imie");
+            showResult("Niepoprawne imie", true);
             return false;
         }
         valid = UserValidator.isLastNameValid(lastNameField.getText());
         if (!valid) {
-            showError("Niepoprawne nazwisko");
+            showResult("Niepoprawne nazwisko", true);
             return false;
         }
         valid = UserValidator.isMailValid(mailField.getText());
         if (!valid) {
-            showError("Niepoprawny mail");
+            showResult("Niepoprawny mail", true);
             return false;
         }
         return true;
     }
 
+    private void clearInputFields() {
+        firstNameField.setText("");
+        lastNameField.setText("");
+        mailField.setText("");
+    }
 
-    private void showError(String label){
-        //    TO IMPLEMENT
-        System.out.println("BLAD " + label);
+
+    private void showResult(String labelText, boolean isError){
+        if (isError) {
+            resultLabel.setStyle("-fx-text-fill: red;");
+        } else {
+            resultLabel.setStyle("-fx-text-fill: green;");
+
+            // clear fields if succesfully added
+            clearInputFields();
+        }
+        resultLabel.setText(labelText);
     }
 }
