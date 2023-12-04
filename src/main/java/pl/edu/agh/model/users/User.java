@@ -1,6 +1,10 @@
 package pl.edu.agh.model.users;
 
-import javax.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
 import java.util.Date;
 
 @MappedSuperclass

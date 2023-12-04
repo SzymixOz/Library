@@ -1,12 +1,12 @@
 package pl.edu.agh.model.users;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.loans.Loan;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity

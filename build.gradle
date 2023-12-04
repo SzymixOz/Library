@@ -1,35 +1,35 @@
 plugins {
-    id 'java'
-    id 'application'
-    id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'java'
+	id 'org.springframework.boot' version '3.2.0'
+	id 'io.spring.dependency-management' version '1.1.4'
 
-    id 'org.openjfx.javafxplugin' version '0.1.0'
+	id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'pl.edu.agh'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+	sourceCompatibility = '17'
+}
 
 apply plugin: 'org.openjfx.javafxplugin'
 
 javafx {
-    version = '17'
-    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media', 'javafx.swing', 'javafx.web']
+	version = '17'
+	modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media', 'javafx.swing', 'javafx.web']
 }
 
 repositories {
-    mavenCentral()
-}
-
-test {
-    useJUnitPlatform()
+	mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.1'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.1'
+tasks.named('test') {
+	useJUnitPlatform()
 }

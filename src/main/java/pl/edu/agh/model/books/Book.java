@@ -1,9 +1,9 @@
 package pl.edu.agh.model.books;
 
+import jakarta.persistence.*;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.loans.Loan;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity

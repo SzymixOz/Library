@@ -1,6 +1,7 @@
-package pl.edu.agh.test.validator;
+package pl.edu.agh.validator;
 
 import org.junit.jupiter.api.Test;
+import pl.edu.agh.validator.UserValidator;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

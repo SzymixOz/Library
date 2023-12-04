@@ -1,6 +1,7 @@
 package pl.edu.agh.model.users;
 
-import javax.persistence.Entity;
+
+import jakarta.persistence.Entity;
 
 @Entity
 public class Librarian extends User {
