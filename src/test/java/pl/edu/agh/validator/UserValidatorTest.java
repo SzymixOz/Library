@@ -1,4 +1,4 @@
-package pl.edu.agh.validator;
+package pl.edu.agh.test.validator;
 
 import org.junit.jupiter.api.Test;
 
