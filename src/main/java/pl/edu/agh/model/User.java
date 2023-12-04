@@ -8,8 +8,7 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userID;
-
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -27,8 +26,8 @@ public abstract class User {
         this.isActive = true;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
