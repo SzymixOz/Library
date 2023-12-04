@@ -1,4 +1,7 @@
-package pl.edu.agh.model;
+package pl.edu.agh.model.loans;
+
+import pl.edu.agh.model.books.Book;
+import pl.edu.agh.model.users.Member;
 
 import javax.persistence.*;
 import java.util.Date;

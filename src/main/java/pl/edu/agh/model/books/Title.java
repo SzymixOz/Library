@@ -1,4 +1,4 @@
-package pl.edu.agh.model;
+package pl.edu.agh.model.books;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

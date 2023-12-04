@@ -1,4 +1,4 @@
-package pl.edu.agh.model;
+package pl.edu.agh.model.users;
 
 import javax.persistence.Entity;
 

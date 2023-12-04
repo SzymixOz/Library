@@ -1,6 +1,7 @@
-package pl.edu.agh.model;
+package pl.edu.agh.model.users;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import pl.edu.agh.model.loans.HistoricalLoan;
+import pl.edu.agh.model.loans.Loan;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
