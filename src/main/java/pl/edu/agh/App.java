@@ -1,4 +1,4 @@
-package pl.edu.agh.main;
+package pl.edu.agh;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
