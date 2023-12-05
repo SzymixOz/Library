@@ -11,7 +11,6 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int book_id;
-    private int isbn;
 
     @Enumerated(EnumType.STRING)
     private CoverType coverType;

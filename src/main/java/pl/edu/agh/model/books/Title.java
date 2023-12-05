@@ -12,6 +12,7 @@ public class Title {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int title_id;
 
+    private int isbn;
     private String title;
     private String author;
 
