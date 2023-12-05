@@ -10,10 +10,10 @@ import java.util.Date;
 public class HistoricalLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int loan_id;
-    private Date start_loan_date;
-    private Date end_loan_date;
-    private Date return_loan_date;
+    private int loanId;
+    private Date startLoanDate;
+    private Date endLoanDate;
+    private Date returnLoanDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", referencedColumnName = "id")
