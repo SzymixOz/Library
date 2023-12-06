@@ -1,9 +1,6 @@
 package pl.edu.agh.model.users;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -15,6 +12,7 @@ public abstract class User {
     private int id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private Date joinDate;
     private Date expirationDate;
