@@ -36,17 +36,11 @@ public class AddUserController implements ApplicationListener<StageReadyEvent> {
 
 
     private MemberService memberService;
-    private MemberRepository memberRepository;
     private ApplicationContext context;
 
     @Autowired
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
-    }
-
-    @Autowired
-    public void setMemberRepository(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
     }
 
     @Autowired
@@ -67,7 +61,7 @@ public class AddUserController implements ApplicationListener<StageReadyEvent> {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(aClass -> context.getBean(aClass));
             loader.setLocation(AddUserController.class
-                    .getResource("../../../../view/AddUser.fxml"));
+                    .getResource("/view/AddUser.fxml"));
             BorderPane rootLayout = loader.load();
 
 
