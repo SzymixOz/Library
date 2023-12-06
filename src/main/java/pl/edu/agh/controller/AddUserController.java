@@ -7,11 +7,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import pl.edu.agh.validator.UserValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+import pl.edu.agh.repository.users.MemberRepository;
+import pl.edu.agh.service.MemberService;
+import pl.edu.agh.stage.StageReadyEvent;
 
 import java.io.IOException;
 
-public class AddUserController {
+
+@Component
+public class AddUserController implements ApplicationListener<StageReadyEvent> {
 
     private Stage primaryStage;
 
@@ -26,22 +34,34 @@ public class AddUserController {
     @FXML
     private Label resultLabel;
 
-    // DON'T REMOVE THIS
-    public AddUserController() {
+
+    private MemberService memberService;
+    private ApplicationContext context;
+
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
     }
 
-    public AddUserController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    @Autowired
+    public void setContext(ApplicationContext context) {
+        this.context = context;
+    }
+
+    @Override
+    public void onApplicationEvent(StageReadyEvent event) {
+        this.primaryStage = event.getStage();
+        initRootLayout();
     }
 
     public void initRootLayout() {
         try {
             this.primaryStage.setTitle("Library");
-
             // load layout from FXML file
             FXMLLoader loader = new FXMLLoader();
+            loader.setControllerFactory(aClass -> context.getBean(aClass));
             loader.setLocation(AddUserController.class
-                    .getResource("../../../../view/AddUser.fxml"));
+                    .getResource("/view/AddUser.fxml"));
             BorderPane rootLayout = loader.load();
 
 
@@ -55,65 +75,32 @@ public class AddUserController {
         }
     }
 
-    @FXML
     public void handleAddUserAction() {
         resultLabel.setText(null);
-        if (!isUserValid()) {
-            return;
-        }
+
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String email = mailField.getText();
 
-
-        System.out.println(firstName + lastName + email);
-        // HERE SAVE IN DATABASE
-//        TO DO:
-//        Utworzyc commanda/servis ktory bedzie ogarnial dodanie usera
-//        przekleic z controllera validacje do commanda/servisu
-//        dodatkowo dodac jeszcze validacje sprawdzajaca czy dany email jest juz w bazie danych
-//        dobrze by bylo jakby command do controllera zwracal jakiegos enuma
-//        i na podstawie tego enuma by byly wyswietlane odpowiednie komunikaty:
-//        "Uzytkownik zostal dodany" / "niepoprawne imie" ...
-
-        showResult("Uzytkownik zostal dodany", false);
+        String result = this.memberService.addUser(firstName, lastName, email);
+        showResult(result);
     }
 
-    private boolean isUserValid() {
-        boolean valid = UserValidator.isFirstNameValid(firstNameField.getText());
-        if (!valid) {
-            showResult("Niepoprawne imie", true);
-            return false;
+    private void showResult(String labelText) {
+        if ("Uzytkownik zostal dodany".equals(labelText)) {
+            resultLabel.setStyle("-fx-text-fill: green;");
+
+            // clear fields if succesfully added
+            clearInputFields();
+        } else {
+            resultLabel.setStyle("-fx-text-fill: red;");
         }
-        valid = UserValidator.isLastNameValid(lastNameField.getText());
-        if (!valid) {
-            showResult("Niepoprawne nazwisko", true);
-            return false;
-        }
-        valid = UserValidator.isMailValid(mailField.getText());
-        if (!valid) {
-            showResult("Niepoprawny mail", true);
-            return false;
-        }
-        return true;
+        resultLabel.setText(labelText);
     }
 
     private void clearInputFields() {
         firstNameField.setText("");
         lastNameField.setText("");
         mailField.setText("");
-    }
-
-
-    private void showResult(String labelText, boolean isError){
-        if (isError) {
-            resultLabel.setStyle("-fx-text-fill: red;");
-        } else {
-            resultLabel.setStyle("-fx-text-fill: green;");
-
-            // clear fields if succesfully added
-            clearInputFields();
-        }
-        resultLabel.setText(labelText);
     }
 }
