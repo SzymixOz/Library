@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.edu.agh.controller.AddUserController"
+            prefWidth="1000" prefHeight="600">
+    <top>
+        <VBox>
+            <Label id="titleLabel" text="Nazwa książki" styleClass="label"/>
+            <Button id="backButton" text="Powrót" styleClass="button" />
+        </VBox>
+    </top>
+    <center>
+        <VBox id="centerVBox">
+        </VBox>
+    </center>
+    <stylesheets>
+        <URL value="@../styles/SingleBookStyles.css" />
+    </stylesheets>
+</BorderPane>
