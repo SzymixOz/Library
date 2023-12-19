@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.repository.users.MemberRepository;
 import pl.edu.agh.service.MemberService;
 import pl.edu.agh.stage.StageReadyEvent;
 
@@ -61,7 +60,7 @@ public class AddUserController implements ApplicationListener<StageReadyEvent> {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(aClass -> context.getBean(aClass));
             loader.setLocation(AddUserController.class
-                    .getResource("/view/AddUser.fxml"));
+                    .getResource("/view/AddUserView.fxml"));
             BorderPane rootLayout = loader.load();
 
 
