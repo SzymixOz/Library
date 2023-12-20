@@ -30,3 +30,8 @@
     -fx-border-color: #38b8f1;
     -fx-border-radius: 5px;
 }
+
+#singleBook {
+
+    -fx-pref-width: 200;
+}

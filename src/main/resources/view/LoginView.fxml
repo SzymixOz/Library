@@ -7,12 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.edu.agh.controller.AddUserController"
+            fx:controller="pl.edu.agh.controller.LoginController"
             prefWidth="1000" prefHeight="600">
     <top>
         <VBox>
             <Label id="titleLabel" text="Logowanie" styleClass="label"/>
-            <Button id="backButton" text="Powrót" styleClass="button" />
         </VBox>
     </top>
     <center>
@@ -25,7 +24,7 @@
                     <TextField fx:id="passwordField" promptText="Wprowadź hasło" styleClass="text-field"/>
                     <Label fx:id="resultLabel" styleClass="label"/>
                     <Pane prefHeight="15"/>
-                    <Button text="Zaloguj" styleClass="button"/>
+                    <Button text="Zaloguj" onAction="#handleLoginClickAction" styleClass="button"/>
                 </VBox>
             </VBox>
     </center>

@@ -10,7 +10,10 @@
             fx:controller="pl.edu.agh.controller.AddUserController"
             prefWidth="1000" prefHeight="600">
     <top>
-        <Label id="titleLabel" text="Dodaj czytelnika" styleClass="label"/>
+        <VBox>
+            <Label id="titleLabel" text="Dodaj użytkownika" styleClass="label"/>
+            <Button id="backButton" text="Powrót" onAction="#handleBackClickAction" styleClass="button" />
+        </VBox>
     </top>
     <center>
             <VBox id="centerVBox">

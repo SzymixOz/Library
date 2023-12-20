@@ -6,19 +6,18 @@
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.edu.agh.controller.AddUserController"
+            fx:controller="pl.edu.agh.controller.MainController"
             prefWidth="1000" prefHeight="600">
     <top>
         <Label id="titleLabel" text="Strona główna" styleClass="label"/>
     </top>
     <center>
         <VBox id="centerVBox">
-            <Button text="Zaloguj się" styleClass="button"/>
-            <Button text="Katalog" styleClass="button"/>
-            <Button text="Dodaj użytkownika" styleClass="button"/>
-            <Button text="Dodaj książkę" styleClass="button"/>
-            <Button text="Widok administratora" styleClass="button"/>
-            <Button text="Wyloguj się" styleClass="button"/>
+            <Button text="Katalog" onAction="#handleCatalogClickAction" styleClass="button"/>
+            <Button text="Dodaj użytkownika" onAction="#handleAddUserClickAction" styleClass="button"/>
+            <Button text="Dodaj książkę" onAction="#handleAddBookClickAction" styleClass="button"/>
+            <Button text="Widok administratora" onAction="#handleAdminClickAction" styleClass="button"/>
+            <Button text="Wyloguj się" onAction="#handleLogoutClickAction" styleClass="button"/>
         </VBox>
     </center>
     <stylesheets>

@@ -9,16 +9,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.service.MemberService;
-import pl.edu.agh.stage.StageReadyEvent;
 
 import java.io.IOException;
 
 
 @Component
-public class AddUserController implements ApplicationListener<StageReadyEvent> {
+public class AddUserController {
 
     private Stage primaryStage;
 
@@ -42,33 +40,25 @@ public class AddUserController implements ApplicationListener<StageReadyEvent> {
         this.memberService = memberService;
     }
 
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
     }
 
-    @Override
-    public void onApplicationEvent(StageReadyEvent event) {
-        this.primaryStage = event.getStage();
-        initRootLayout();
-    }
-
-    public void initRootLayout() {
+    public void loadView() {
         try {
-            this.primaryStage.setTitle("Library");
-            // load layout from FXML file
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(aClass -> context.getBean(aClass));
-            loader.setLocation(AddUserController.class
-                    .getResource("/view/AddUserView.fxml"));
-            BorderPane rootLayout = loader.load();
+            loader.setLocation(AdminController.class.getResource("/view/AddUserView.fxml"));
+            BorderPane mainLayout = loader.load();
 
-
-            // add layout to a scene and show them all
-            Scene scene = new Scene(rootLayout);
+            Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,5 +91,11 @@ public class AddUserController implements ApplicationListener<StageReadyEvent> {
         firstNameField.setText("");
         lastNameField.setText("");
         mailField.setText("");
+    }
+
+    public void handleBackClickAction() {
+        MainController mainController = context.getBean(MainController.class);
+        mainController.setPrimaryStage(primaryStage);
+        mainController.loadView();
     }
 }
