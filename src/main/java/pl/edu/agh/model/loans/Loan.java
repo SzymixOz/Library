@@ -19,7 +19,7 @@ public class Loan {
     private Member member;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="book_id", referencedColumnName = "book_id")
+    @JoinColumn(name="book_id", referencedColumnName = "bookId")
     private Book book;
 
 }

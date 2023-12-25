@@ -20,6 +20,6 @@ public class HistoricalLoan {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="book_id", referencedColumnName = "book_id")
+    @JoinColumn(name="book_id", referencedColumnName = "bookId")
     private Book book;
 }

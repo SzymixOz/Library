@@ -11,6 +11,7 @@ import java.util.List;
 public class Member extends User {
 
     private Boolean newsLetter;
+    private Boolean banned;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")
     private List<Loan> loans;
@@ -21,11 +22,19 @@ public class Member extends User {
     public Member(String firstName, String lastName, String email, Boolean newsLetter) {
         super(firstName, lastName, email);
         this.newsLetter = newsLetter;
+        this.banned = false;
     }
     public Member() {
     }
 
     public Boolean getNewsLetter() {
         return newsLetter;
+    }
+
+    public void ban() {
+        this.banned = true;
+    }
+    public void unban() {
+        this.banned = false;
     }
 }
