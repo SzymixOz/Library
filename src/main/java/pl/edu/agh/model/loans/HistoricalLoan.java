@@ -16,7 +16,7 @@ public class HistoricalLoan {
     private Date returnLoanDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="user_id", referencedColumnName = "userId")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

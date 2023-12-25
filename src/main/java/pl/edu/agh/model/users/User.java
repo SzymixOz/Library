@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int userId;
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -28,8 +29,8 @@ public abstract class User {
         this.isActive = true;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
     public String getFirstName() {

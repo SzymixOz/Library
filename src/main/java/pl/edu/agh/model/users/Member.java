@@ -1,16 +1,15 @@
 package pl.edu.agh.model.users;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.loans.Loan;
 
 import java.util.List;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "userId")
 public class Member extends User {
+
     private Boolean newsLetter;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")

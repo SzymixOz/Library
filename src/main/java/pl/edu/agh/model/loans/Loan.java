@@ -15,7 +15,7 @@ public class Loan {
     private Date endLoanDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="user_id", referencedColumnName = "userId")
     private Member member;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,10 +1,13 @@
 package pl.edu.agh.model.users;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 
 @Entity
+@PrimaryKeyJoinColumn(name = "userId")
 public class Admin extends User {
+
     private int room;
     private String phoneNumber;
 
