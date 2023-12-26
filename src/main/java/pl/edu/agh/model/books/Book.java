@@ -24,4 +24,13 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="title_id", referencedColumnName = "titleId")
     private Title title;
+
+    public Book(CoverType coverType, Title title) {
+        this.coverType = coverType;
+        this.title = title;
+    }
+
+    public Book() {
+
+    }
 }

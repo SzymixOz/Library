@@ -11,7 +11,7 @@ public class Title {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int titleId;
 
-    private int isbn;
+    private long isbn;
     private String title;
     private String author;
 
@@ -19,4 +19,15 @@ public class Title {
     private Blob image;
 
     //raczej go nie interesuje lista booków, więc jej nie wrzucam
+
+    public Title(Long isbn, String title, String author, Blob image) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.image = image;
+    }
+
+    public Title() {
+
+    }
 }
