@@ -30,7 +30,9 @@ public class MemberService {
         }
 
         if (!UserValidator.isPasswordStrong(password)) {
-            return "Slabe haslo";
+            return "Haslo musi zawierac co najmniej:\n" +
+                    "8 znaków, 1 cyfre, 1 duza litere,\n" +
+                    "1 mala litere, 1 znak specjalny";
         }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
