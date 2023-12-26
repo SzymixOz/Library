@@ -9,11 +9,11 @@ public class BookValidator {
         return pattern.matcher(word).matches();
     }
     public static boolean isTitleValid(String title) {
-        String titleRegex = "^[A-Z][a-zA-Z0-9\\-']{1,40}$";
+        String titleRegex = "^[A-Z][a-zA-Z0-9\\- ']{1,40}$";
         return checkPattern(title, titleRegex);
     }
     public static boolean isAuthorValid(String author) {
-        String authorRegex = "^[A-Z][a-zA-Z\\- ']{1,40}$";
+        String authorRegex = "^[A-Z][a-zA-Z\\- .']{1,40}$";
         return checkPattern(author, authorRegex);
     }
     public static boolean isIsbnValid(String isbn) {

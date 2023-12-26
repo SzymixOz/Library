@@ -19,14 +19,17 @@ public abstract class User {
     private Date expirationDate;
     private boolean isActive;
 
+    private String password;
+
     public User() {}
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.joinDate = new Date();
         this.expirationDate = null;
         this.isActive = true;
+        this.password = password;
     }
 
     public int getUserId() {
@@ -55,5 +58,9 @@ public abstract class User {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -10,8 +10,8 @@ public class Librarian extends User {
 
     private int room;
 
-    public Librarian(String firstName, String lastName, String email, int room) {
-        super(firstName, lastName, email);
+    public Librarian(String firstName, String lastName, String email, int room, String password) {
+        super(firstName, lastName, email, password);
         this.room = room;
     }
 

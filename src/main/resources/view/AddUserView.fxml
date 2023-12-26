@@ -26,6 +26,9 @@
                     <Pane prefHeight="15"/>
                     <Label text="E-mail" styleClass="label"/>
                     <TextField fx:id="mailField" promptText="Wprowadź e-mail" styleClass="text-field"/>
+                    <Pane prefHeight="15"/>
+                    <Label text="Hasło" styleClass="label"/>
+                    <TextField fx:id="passwordField" promptText="Wprowadź hasło" styleClass="text-field"/>
                     <Label fx:id="resultLabel" styleClass="label"/>
                     <Button text="Dodaj" onAction="#handleAddUserAction" styleClass="button"/>
                 </VBox>

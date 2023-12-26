@@ -19,8 +19,8 @@ public class Member extends User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "member")
     private List<HistoricalLoan> historicalLoans;
 
-    public Member(String firstName, String lastName, String email, Boolean newsLetter) {
-        super(firstName, lastName, email);
+    public Member(String firstName, String lastName, String email, Boolean newsLetter, String password) {
+        super(firstName, lastName, email, password);
         this.newsLetter = newsLetter;
         this.banned = false;
     }

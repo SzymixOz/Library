@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.service.BookService;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -140,7 +139,7 @@ public class AddBookController {
     }
 
     private void showResult(String labelText) {
-        if ("Książka została dodana".equals(labelText)) {
+        if ("Ksiazka zostala dodana".equals(labelText)) {
             resultLabel.setStyle("-fx-text-fill: green;");
 
             // clear fields if succesfully added
