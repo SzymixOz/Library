@@ -48,6 +48,10 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
     public void handleLoginClickAction() {
         // tutaj cala logika zwiazana z logowaniem
 
+        // Sprawdzenie czy podane hasło pasuje do zahaszowanego
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        boolean matches = passwordEncoder.matches(password, hashedPassword);
+
         MainController mainController = context.getBean(MainController.class);
         mainController.setPrimaryStage(primaryStage);
         mainController.loadView();

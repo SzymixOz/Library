@@ -28,6 +28,10 @@ public class AddUserController {
 
     @FXML
     private TextField mailField;
+
+    @FXML
+    private TextField passwordField;
+
     @FXML
     private Label resultLabel;
 
@@ -70,8 +74,9 @@ public class AddUserController {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String email = mailField.getText();
+        String password = passwordField.getText();
 
-        String result = this.memberService.addUser(firstName, lastName, email);
+        String result = this.memberService.addUser(firstName, lastName, email, password);
         showResult(result);
     }
 

@@ -1,7 +1,7 @@
 
 #centerVBox {
     -fx-alignment: CENTER;
-    -fx-max-height: 300;
+    -fx-max-height: 450;
     -fx-max-width: 350;
     -fx-background-color: #38b8f1;
     -fx-background-radius: 10;
@@ -40,6 +40,8 @@
 
 #resultLabel {
     -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
+    -fx-pref-height: 90;
     -fx-font-size: 14px;
     -fx-padding: 5px;
     -fx-text-fill: #fc1b1b;

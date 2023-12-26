@@ -10,7 +10,7 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int book_id;
+    private int bookId;
 
     @Enumerated(EnumType.STRING)
     private CoverType coverType;
@@ -22,6 +22,15 @@ public class Book {
     private List<HistoricalLoan> historicalLoans;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="title_id", referencedColumnName = "title_id")
+    @JoinColumn(name="title_id", referencedColumnName = "titleId")
     private Title title;
+
+    public Book(CoverType coverType, Title title) {
+        this.coverType = coverType;
+        this.title = title;
+    }
+
+    public Book() {
+
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.repository.users.MemberRepository;
 import pl.edu.agh.validator.UserValidator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class MemberService {
@@ -15,7 +16,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public String addUser(String firstName, String lastName, String email) {
+    public String addUser(String firstName, String lastName, String email, String password) {
         if (!UserValidator.isFirstNameValid(firstName)) {
             return "Niepoprawne imie";
         }
@@ -28,7 +29,16 @@ public class MemberService {
             return "Niepoprawny mail";
         }
 
-        Member member = new Member(firstName, lastName, email, false);
+        if (!UserValidator.isPasswordStrong(password)) {
+            return "Haslo musi zawierac co najmniej:\n" +
+                    "8 znaków, 1 cyfre, 1 duza litere,\n" +
+                    "1 mala litere, 1 znak specjalny";
+        }
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        Member member = new Member(firstName, lastName, email, false, hashedPassword);
         try {
             memberRepository.save(member);
             return "Uzytkownik zostal dodany";
