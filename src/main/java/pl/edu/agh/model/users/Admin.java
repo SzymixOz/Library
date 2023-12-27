@@ -12,7 +12,7 @@ public class Admin extends User {
     private String phoneNumber;
 
     public Admin(String firstName, String lastName, String email, String phoneNumber, int room, String password) {
-        super(firstName, lastName, email, password);
+        super(firstName, lastName, email, password, AccountType.ADMIN);
         this.phoneNumber = phoneNumber;
         this.room = room;
     }
@@ -22,6 +22,14 @@ public class Admin extends User {
 
     public int getRoom() {
         return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoneNumber() {

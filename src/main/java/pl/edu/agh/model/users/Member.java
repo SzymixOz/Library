@@ -20,10 +20,19 @@ public class Member extends User {
     private List<HistoricalLoan> historicalLoans;
 
     public Member(String firstName, String lastName, String email, Boolean newsLetter, String password) {
-        super(firstName, lastName, email, password);
+        super(firstName, lastName, email, password, AccountType.MEMBER);
         this.newsLetter = newsLetter;
         this.banned = false;
     }
+
+    public Boolean getBanned() {
+        return banned;
+    }
+
+    public void setBanned(Boolean banned) {
+        this.banned = banned;
+    }
+
     public Member() {
     }
 
@@ -34,7 +43,25 @@ public class Member extends User {
     public void ban() {
         this.banned = true;
     }
+
     public void unban() {
         this.banned = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "userId=" + userId +
+                " accountType=" + accountType +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", joinDate=" + joinDate +
+                ", expirationDate=" + expirationDate +
+                ", isActive=" + isActive +
+                ", password='" + password + '\'' +
+                "newsLetter=" + newsLetter +
+                ", banned=" + banned +
+                '}';
     }
 }
