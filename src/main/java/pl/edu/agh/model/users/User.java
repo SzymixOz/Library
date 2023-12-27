@@ -94,6 +94,7 @@ public abstract class User {
     @Override
     public String toString() {
         return "User{" +
+                "accountType=" + accountType +
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

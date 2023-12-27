@@ -105,7 +105,7 @@ public class AdminController {
         User user = usersTable.getSelectionModel().getSelectedItem();
         if (user != null) {
             User newUser = showTransactionEditDialog(user);
-            usersTable.getItems().set(usersTable.getSelectionModel().getSelectedIndex(), newUser);
+            usersTable.getItems().set(usersTable.getSelectionModel().getSelectedIndex(), adminService.findAllUsersByEmail(newUser.getEmail()));
         }
     }
 

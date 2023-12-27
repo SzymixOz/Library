@@ -85,6 +85,9 @@ public class AdminService {
     public Admin findByEmail(String email) {
         return this.adminRepository.findByEmail(email);
     }
+    public User findAllUsersByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 
     public void addExample() {
         String password = "Haslo1234$";
