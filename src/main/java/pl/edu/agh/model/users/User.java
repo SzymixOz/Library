@@ -10,19 +10,36 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userId;
-    private String firstName;
-    private String lastName;
+    protected int userId;
+    protected String firstName;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    protected String lastName;
     @Column(unique = true)
-    private String email;
-    private Date joinDate;
-    private Date expirationDate;
-    private boolean isActive;
+    protected String email;
+    protected Date joinDate;
+    protected Date expirationDate;
 
-    private String password;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public User() {}
-    public User(String firstName, String lastName, String email, String password) {
+    protected boolean isActive;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    protected String password;
+    protected AccountType accountType;
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email, String password, AccountType accountType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -30,6 +47,7 @@ public abstract class User {
         this.expirationDate = null;
         this.isActive = true;
         this.password = password;
+        this.accountType = accountType;
     }
 
     public int getUserId() {
@@ -43,6 +61,7 @@ public abstract class User {
     public String getLastName() {
         return lastName;
     }
+
 
     public String getEmail() {
         return email;
@@ -62,5 +81,27 @@ public abstract class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", joinDate=" + joinDate +
+                ", expirationDate=" + expirationDate +
+                ", isActive=" + isActive +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
