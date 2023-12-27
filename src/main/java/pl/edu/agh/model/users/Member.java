@@ -36,6 +36,10 @@ public class Member extends User {
     public Member() {
     }
 
+    public void setNewsLetter(Boolean newsLetter) {
+        this.newsLetter = newsLetter;
+    }
+
     public Boolean getNewsLetter() {
         return newsLetter;
     }

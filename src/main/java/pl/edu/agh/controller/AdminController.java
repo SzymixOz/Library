@@ -93,7 +93,7 @@ public class AdminController {
         LastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         AccountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("accountType"));
 
-//        adminService.printAll();
+        adminService.printAll();
         deleteButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         editButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
     }
@@ -103,16 +103,16 @@ public class AdminController {
         adminService.deleteUser(usersTable.getSelectionModel().getSelectedItems());
     }
 
-
     @FXML
     private void handleEditAction(ActionEvent event) {
         User user = usersTable.getSelectionModel().getSelectedItem();
         if (user != null) {
-            showTransactionEditDialog(user);
+            User newUser = showTransactionEditDialog(user);
+            usersTable.getItems().set(usersTable.getSelectionModel().getSelectedIndex(), newUser);
         }
     }
 
-    public boolean showTransactionEditDialog(User user) {
+    public User showTransactionEditDialog(User user) {
         try {
             // Load the fxml file and create a new stage for the dialog
             FXMLLoader loader = new FXMLLoader();
@@ -135,13 +135,53 @@ public class AdminController {
 
 
             dialogStage.showAndWait();
-            return userDialogController.isApproved();
+            return user;
+//            return userDialogController.isApproved();
 
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
+//    OLD-VERSION
+//    @FXML
+//    private void handleEditAction(ActionEvent event) {
+//        User user = usersTable.getSelectionModel().getSelectedItem();
+//        if (user != null) {
+//            showTransactionEditDialog(user);
+//        }
+//        initialize();
+//    }
+//    public boolean showTransactionEditDialog(User user) {
+//        try {
+//            // Load the fxml file and create a new stage for the dialog
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setControllerFactory(aClass -> context.getBean(aClass));
+//            loader.setLocation(AdminController.class.getResource("/view/UserEditDialog.fxml"));
+//            BorderPane page = loader.load();
+//
+//            // Create the dialog Stage.
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("Edit transaction");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(primaryStage);
+//            Scene scene = new Scene(page);
+//            dialogStage.setScene(scene);
+//
+//
+//            UserDialogController userDialogController = loader.getController();
+//            userDialogController.setDialogStage(dialogStage);
+//            userDialogController.setData(user);
+//
+//
+//            dialogStage.showAndWait();
+//            return userDialogController.isApproved();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     public void handleBackClickAction() {
         MainController mainController = context.getBean(MainController.class);

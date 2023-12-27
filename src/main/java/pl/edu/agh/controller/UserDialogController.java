@@ -51,7 +51,7 @@ public class UserDialogController {
         user.setEmail(emailField.getText());
         if (user instanceof Member memberUser) {
             memberUser.setBanned(bannedCheckBox.isSelected());
-            memberUser.setBanned(newsletterCheckBox.isSelected());
+            memberUser.setNewsLetter(newsletterCheckBox.isSelected());
         }
         if (user instanceof Admin adminUser) {
             adminUser.setRoom(Integer.parseInt(roomField.getText()));
@@ -68,7 +68,7 @@ public class UserDialogController {
         if (user instanceof Member memberUser) {
             bannedCheckBox.setSelected(memberUser.getBanned());
             bannedCheckBox.setVisible(true);
-            newsletterCheckBox.setSelected(memberUser.getBanned());
+            newsletterCheckBox.setSelected(memberUser.getNewsLetter());
             newsletterCheckBox.setVisible(true);
         }
         if (user instanceof Admin adminUser) {
