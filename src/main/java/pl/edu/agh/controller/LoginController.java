@@ -81,10 +81,6 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
         }
     }
     public void handleLoginClickAction() {
-        // tutaj cala logika zwiazana z logowaniem
-
-        // Sprawdzenie czy podane hasło pasuje do zahaszowanego
-
 
         String mail = mailField.getText();
         String givenPassword = passwordField.getText();
@@ -118,6 +114,12 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
         MainController mainController = context.getBean(MainController.class);
         mainController.setPrimaryStage(primaryStage);
         mainController.loadView();
+    }
+
+    public void handleAddUserClickAction() {
+        AddUserController addUserController = context.getBean(AddUserController.class);
+        addUserController.setPrimaryStage(primaryStage);
+        addUserController.loadView();
     }
 
     @Override

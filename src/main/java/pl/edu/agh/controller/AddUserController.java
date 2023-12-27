@@ -100,8 +100,8 @@ public class AddUserController {
     }
 
     public void handleBackClickAction() {
-        MainController mainController = context.getBean(MainController.class);
-        mainController.setPrimaryStage(primaryStage);
-        mainController.loadView();
+        LoginController loginController = context.getBean(LoginController.class);
+        loginController.setPrimaryStage(primaryStage);
+        loginController.loadView();
     }
 }

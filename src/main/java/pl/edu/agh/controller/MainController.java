@@ -22,8 +22,6 @@ public class MainController {
     @FXML
     Button CatalogButton;
     @FXML
-    Button AddUserButton;
-    @FXML
     Button AddBookButton;
     @FXML
     Button AdminViewButton;
@@ -60,7 +58,6 @@ public class MainController {
         UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
-        AddUserButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
@@ -69,11 +66,6 @@ public class MainController {
         CatalogController catalogController = context.getBean(CatalogController.class);
         catalogController.setPrimaryStage(primaryStage);
         catalogController.loadView();
-    }
-    public void handleAddUserClickAction() {
-        AddUserController addUserController = context.getBean(AddUserController.class);
-        addUserController.setPrimaryStage(primaryStage);
-        addUserController.loadView();
     }
     public void handleAddBookClickAction() {
         AddBookController addBookController = context.getBean(AddBookController.class);

@@ -25,6 +25,8 @@
                     <Label fx:id="resultLabel" styleClass="label"/>
                     <Pane prefHeight="15"/>
                     <Button text="Zaloguj" onAction="#handleLoginClickAction" styleClass="button"/>
+                    <Pane prefHeight="15"/>
+                    <Button text="Dodaj użytkownika" onAction="#handleAddUserClickAction" styleClass="button"/>
                 </VBox>
             </VBox>
     </center>
