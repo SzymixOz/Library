@@ -22,9 +22,9 @@ Dodatkowo będzie możliwość wysyłania powiadomień do czytelników o zbliża
 
 ### Pakiet users
 Pakiet ten składa się z abstrakcyjnej klasy `User`, w której mamy podstawowe informacje o każdym użytkowniku
-tj. id, firstName, lastName, email, joinDate, expirationDate. Klasy `Admin`, `Librarian`, `Member` dziedziczą po klasie
+tj. id, firstName, lastName, email, joinDate, expirationDate, isActive, account_type, password. Klasy `Admin`, `Librarian`, `Member` dziedziczą po klasie
 `User`oraz mają swoje pola specyficzne dla danego typu użytkownika.
-* `Member` posiada pole newsletter informujące czy dana osoba chce odszymywać.
+* `Member` posiada pole newsletter informujące czy dana osoba chce odszymywać, banned umożliwiające banowanie.
 * `Libriarian` posiada pole room informujące o numerze pokoju, w którym pracuje.
 * `Admin` posiada pola room oraz phoneNumber.
 
@@ -33,11 +33,12 @@ Pakiet ten składa się z enumeratora `CoverType` pozwalającego określić czy 
 czy w miękkiej oprawie. Klasa `Title` z polami title_id, isbn, title, author, reprezentuje dany tytuł dostępny w bibliotece.
 Klasa `Book` posiada pola book_id, coverType, loan, historicalLoans, title. Loan służy do szybkiego znalezienia czytelnika,
 który aktualnie wypożyczył daną książkę, historicalLoans zapewnia szybki dostęp do historii wypożyczeń danego egzemplarza książki.
+Klasa `Rating` z polami ratingId, title, member, rating, comment, przechowuje oceny oraz komentarze czytelników dla konkretnych tytułów.
 
 ### Pakiet loans
 Pakiet ten składa się z klasy `Loan` oraz `HistoricalLoan`. Klasa loan posiada pola loanId, startLoanDate, endLoanDate, member, book, user.
 Reprezentuje ona wypożyczenie książki przez użytkownika. 
-Klasa `HistoricalLoan` z polami loanId, startLoanDate, endLoanDate, returLoanDate, member, book jest klasą reprezentującą
+Klasa `HistoricalLoan` z polami loanId, startLoanDate, endLoanDate, returnLoanDate, member, book jest klasą reprezentującą
 historię wypożyczeń książek.
 
 
@@ -54,6 +55,7 @@ Dodatkowo zostały zaimplementowane metody wyszukiwania danych w bazie danych.
 ## Pakiet service
 Tutaj znajdują się klasy, które przy pomocy repository kontaktują się z bazą danych. Odpowiedni serwis odpowiada danej tabeli w bazie danych.
 Przy pomocy serwisów możemy między innymi odnaleźć użytkownika po adresie email, dodać nowego użytkownika oraz dodać nową książkę.
+Zaimplementowane klasy: `AdminService`, `BookService`, `LibrarianService`, `MemberService`.
 
 
 ## Opis UI
@@ -62,7 +64,13 @@ Komunikację UI-model zaimplementowano w oparciu o wzorzec MVC (Model-View-Contr
 Zapewnia aktualizację interfejsu w czasie rzeczywistym przy zmianie danych w modelu. 
 
 Klasa `AddUserController` odpowiada za wyświetlenie widoku oraz obsługę formularza tworzenia nowego użytkownika, wywołuje ona widok, który 
-znajduje się w pliku `AddUser.fxml` ze stylami w pliku `AddUserStyles.css`
+znajduje się w pliku `AddUserView.fxml` ze stylami w pliku `AddUserStyles.css`
+
+Klasa `AddBookController` odpowiada za wyświetlenie widoku oraz obsługę formularza tworzenia nowej książki, wywołuje ona widok, który
+znajduje się w pliku `AddBookView.fxml` ze stylami w pliku `AddBookStyles.css`
+
+Analogicznie mamy jeszcze klasy `LoginController`, `AdminController`, `CatalogController`, `MainController` i odpowiadające im
+pliki fxml oraz css. Każda z tych klas odpowiada za wyświetlenie widoku oraz związane z nim akcje, zgodnie z nazwą klasy.
 
 
 ## Pakiet validator
@@ -74,6 +82,8 @@ następnie dowolna sekcja nazw domenowych oddzielone kropką, ostatnia sekwencja
 * nazwisko musi zaczynać się z dużej litery i może zawierać tylko litery, może to być nazwisko podwójne,
 wtedy kolejne człony przedzielone są zankiem pauzy '-,' długość nazwiska musi się mieścić w przedziale [2, 30]
 
+Jest tam rónież klasa `BookValidator` walidująca pola formularza dodawania nowej książki. Sprawdzany jest tytuł, autor oraz numer isbn.
+
 ## Pakiet session
 W pakiecie session możemy znaleźć klasę `UserSession`, w której przechowywane są dane na temat aktualnie zalogowanego użytkownika.
 Klasa działa przy pomocy wzorca projektowego singleton, dzięki czemu dane o użytkowniku możemy odczytać z dowolnego miejsca w aplikacji.
@@ -84,5 +94,6 @@ W pliku `application.properties` zostały zapisane adres oraz poświadczenia do 
 
 
 ## Testy
-Napisane zostały testy jednostkowe dla walidacji pól formularza tworzącego nowego użytkownika (`UserValidatorTest`).
+Napisane zostały testy jednostkowe dla walidacji pól formularza tworzącego nowego użytkownika (`UserValidatorTest`) oraz
+dla formularza dodawania nowej książki (`BookValidatorTest`).
 ```
