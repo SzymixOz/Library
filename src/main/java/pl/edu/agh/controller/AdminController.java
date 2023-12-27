@@ -70,9 +70,6 @@ public class AdminController {
             loader.setControllerFactory(aClass -> context.getBean(aClass));
             loader.setLocation(AdminController.class.getResource("/view/AdminView.fxml"));
             BorderPane mainLayout = loader.load();
-
-//            System.out.println(this.adminService.getAllUsers());
-//            this.adminService.getAll();
             Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -84,7 +81,6 @@ public class AdminController {
     @FXML
     private void initialize() {
         usersTable.getItems().clear();
-
         usersTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         List<User> userList = adminService.getAllUsers();
         usersTable.getItems().addAll(userList);
@@ -93,14 +89,15 @@ public class AdminController {
         LastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         AccountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("accountType"));
 
-        adminService.printAll();
         deleteButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         editButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
     }
 
     @FXML
     private void handleDeleteAction(ActionEvent event) {
-        adminService.deleteUser(usersTable.getSelectionModel().getSelectedItems());
+        User user = usersTable.getSelectionModel().getSelectedItem();
+        adminService.deleteUser(user);
+        usersTable.getItems().set(usersTable.getSelectionModel().getSelectedIndex(), null);
     }
 
     @FXML
@@ -114,74 +111,30 @@ public class AdminController {
 
     public User showTransactionEditDialog(User user) {
         try {
-            // Load the fxml file and create a new stage for the dialog
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(aClass -> context.getBean(aClass));
             loader.setLocation(AdminController.class.getResource("/view/UserEditDialog.fxml"));
             BorderPane page = loader.load();
 
-            // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit transaction");
+            dialogStage.setTitle("Edit user");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-
             UserDialogController userDialogController = loader.getController();
             userDialogController.setDialogStage(dialogStage);
             userDialogController.setData(user);
 
-
             dialogStage.showAndWait();
             return user;
-//            return userDialogController.isApproved();
 
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
-//    OLD-VERSION
-//    @FXML
-//    private void handleEditAction(ActionEvent event) {
-//        User user = usersTable.getSelectionModel().getSelectedItem();
-//        if (user != null) {
-//            showTransactionEditDialog(user);
-//        }
-//        initialize();
-//    }
-//    public boolean showTransactionEditDialog(User user) {
-//        try {
-//            // Load the fxml file and create a new stage for the dialog
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setControllerFactory(aClass -> context.getBean(aClass));
-//            loader.setLocation(AdminController.class.getResource("/view/UserEditDialog.fxml"));
-//            BorderPane page = loader.load();
-//
-//            // Create the dialog Stage.
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("Edit transaction");
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.initOwner(primaryStage);
-//            Scene scene = new Scene(page);
-//            dialogStage.setScene(scene);
-//
-//
-//            UserDialogController userDialogController = loader.getController();
-//            userDialogController.setDialogStage(dialogStage);
-//            userDialogController.setData(user);
-//
-//
-//            dialogStage.showAndWait();
-//            return userDialogController.isApproved();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
 
     public void handleBackClickAction() {
         MainController mainController = context.getBean(MainController.class);

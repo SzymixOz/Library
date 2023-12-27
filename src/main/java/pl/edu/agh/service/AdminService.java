@@ -1,7 +1,6 @@
 package pl.edu.agh.service;
 
 
-import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,9 +78,10 @@ public class AdminService {
         adminRepository.save(new Admin(user.getFirstName(), user.getLastName(), user.getEmail(), "000000000", 0, user.getPassword()));
     }
 
-    public void deleteUser(ObservableList<User> user) {
-        userRepository.deleteAll(user);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
+
     public Admin findByEmail(String email) {
         return this.adminRepository.findByEmail(email);
     }
