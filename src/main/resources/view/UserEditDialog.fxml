@@ -91,7 +91,6 @@
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
                 </TextField>
-
             </children>
         </GridPane>
     </center>
