@@ -51,6 +51,11 @@ Wszystkie repozytoria dziedziczą po klasie JpaRepository, która zawiera podsta
 Dodatkowo zostały zaimplementowane metody wyszukiwania danych w bazie danych.
 
 
+## Pakiet service
+Tutaj znajdują się klasy, które przy pomocy repository kontaktują się z bazą danych. Odpowiedni serwis odpowiada danej tabeli w bazie danych.
+Przy pomocy serwisów możemy między innymi odnaleźć użytkownika po adresie email, dodać nowego użytkownika oraz dodać nową książkę.
+
+
 ## Opis UI
 Aplikacja posiada prosty interfejs użytkownika. Aktualnie pozwala on na dodanie użytkownika do bazy (aktualne ustawienie utworzy konto z uprawnieniami zwykłego użytkonika)
 Komunikację UI-model zaimplementowano w oparciu o wzorzec MVC (Model-View-Controller). Pozwala on na łatwe rozszerzanie aplikacji o kolejne funkcjonalności.
@@ -69,6 +74,10 @@ następnie dowolna sekcja nazw domenowych oddzielone kropką, ostatnia sekwencja
 * nazwisko musi zaczynać się z dużej litery i może zawierać tylko litery, może to być nazwisko podwójne,
 wtedy kolejne człony przedzielone są zankiem pauzy '-,' długość nazwiska musi się mieścić w przedziale [2, 30]
 
+## Pakiet session
+W pakiecie session możemy znaleźć klasę `UserSession`, w której przechowywane są dane na temat aktualnie zalogowanego użytkownika.
+Klasa działa przy pomocy wzorca projektowego singleton, dzięki czemu dane o użytkowniku możemy odczytać z dowolnego miejsca w aplikacji.
+Dane w tej klasie uzupełniane są podczas logowania oraz wylogowywania się z aplijacji.
 
 ## Podpiecie bazy danych
 W pliku `application.properties` zostały zapisane adres oraz poświadczenia do łączenia się z bazą danych. Aktualnie aplikacja łączy się z bazą na serwerze AGH

@@ -29,7 +29,7 @@
 
 
 .button {
-    -fx-pref-width: 100;
+    -fx-pref-width: 300;
     -fx-pref-height: 40;
     -fx-background-color: #fdfdfd;
     -fx-text-fill: black;

@@ -6,4 +6,5 @@ import pl.edu.agh.model.users.Librarian;
 
 @Repository
 public interface LibrarianRepository extends JpaRepository<Librarian, Integer> {
+    Librarian findByEmail(String email);
 }

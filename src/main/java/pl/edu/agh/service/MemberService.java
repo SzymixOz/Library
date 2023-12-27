@@ -1,11 +1,11 @@
 package pl.edu.agh.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.repository.users.MemberRepository;
 import pl.edu.agh.validator.UserValidator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class MemberService {
@@ -14,6 +14,10 @@ public class MemberService {
     @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
+    }
+
+    public Member findByEmail(String email) {
+        return this.memberRepository.findByEmail(email);
     }
 
     public String addUser(String firstName, String lastName, String email, String password) {
@@ -45,5 +49,13 @@ public class MemberService {
         } catch (Exception e) {
             return "Adres e-mail jest juz zajety";
         }
+    }
+
+    public void addExample() {
+        String password = "Haslo1234$";
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        Member member = new Member("Member", "Member", "member@wp.pl", false, hashedPassword);
+        memberRepository.save(member);
     }
 }
