@@ -96,6 +96,7 @@ public class AddUserController {
         firstNameField.setText("");
         lastNameField.setText("");
         mailField.setText("");
+        passwordField.setText("");
     }
 
     public void handleBackClickAction() {
