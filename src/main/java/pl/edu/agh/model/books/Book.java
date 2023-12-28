@@ -30,6 +30,46 @@ public class Book {
         this.title = title;
     }
 
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public CoverType getCoverType() {
+        return coverType;
+    }
+
+    public void setCoverType(CoverType coverType) {
+        this.coverType = coverType;
+    }
+
+    public Loan getLoan() {
+        return loan;
+    }
+
+    public void setLoan(Loan loan) {
+        this.loan = loan;
+    }
+
+    public List<HistoricalLoan> getHistoricalLoans() {
+        return historicalLoans;
+    }
+
+    public void setHistoricalLoans(List<HistoricalLoan> historicalLoans) {
+        this.historicalLoans = historicalLoans;
+    }
+
+    public Title getTitle() {
+        return title;
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
     public Book() {
 
     }

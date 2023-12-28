@@ -32,6 +32,12 @@
 }
 
 #singleBook {
-
     -fx-pref-width: 200;
+}
+
+#searchBox {
+    -fx-alignment: CENTER;
+    -fx-pref-height: 50px;
+    -fx-pref-width: 500px;
+    -fx-padding: 0 30px;
 }

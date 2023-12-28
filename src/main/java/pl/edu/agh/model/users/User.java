@@ -27,6 +27,22 @@ public abstract class User {
         this.lastName = lastName;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     protected boolean isActive;
 
     public void setFirstName(String firstName) {
