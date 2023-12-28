@@ -21,3 +21,14 @@ Będzie umożliwiała generowanie statystyk oraz raportów.
 Dodatkowo będzie możliwość wysyłania powiadomień do czytelników o zbliżającym się terminie oddania książki oraz innych powiadomień.
 
 [Dokumentacja](./documentation/documentation.md)
+
+Użytkownicy:
+* Admin\
+Login: admin@wp.pl\
+Hasło: Haslo1234$
+* Bibliotekarz\
+Login: librarian@wp.pl\
+Hasło: Haslo1234$
+* Czytelnik\
+Login: member@wp.pl\
+Hasło: Haslo1234$
