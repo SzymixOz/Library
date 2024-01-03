@@ -27,6 +27,8 @@ public class MainController {
     Button AdminViewButton;
     @FXML
     Button LogoutButton;
+    @FXML
+    Button BorrowedBooksButton;
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -58,6 +60,7 @@ public class MainController {
         UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
+        BorrowedBooksButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
@@ -66,6 +69,11 @@ public class MainController {
         CatalogController catalogController = context.getBean(CatalogController.class);
         catalogController.setPrimaryStage(primaryStage);
         catalogController.loadView();
+    }
+    public void handleShowBorrowedClickAction() {
+        BorrowedBooksController borrowedBooksController = context.getBean(BorrowedBooksController.class);
+        borrowedBooksController.setPrimaryStage(primaryStage);
+        borrowedBooksController.loadView();
     }
     public void handleAddBookClickAction() {
         AddBookController addBookController = context.getBean(AddBookController.class);
@@ -85,5 +93,4 @@ public class MainController {
         loginController.setPrimaryStage(primaryStage);
         loginController.loadView();
     }
-
 }
