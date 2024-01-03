@@ -14,6 +14,7 @@
     <center>
         <VBox id="centerVBox">
             <Button fx:id="CatalogButton" text="Katalog" onAction="#handleCatalogClickAction" styleClass="button"/>
+            <Button fx:id="BorrowedBooksButton" text="Wypożczone książki" onAction="#handleShowBorrowedClickAction" styleClass="button"/>
             <Button fx:id="AddBookButton" text="Dodaj książkę" onAction="#handleAddBookClickAction" styleClass="button"/>
             <Button fx:id="AdminViewButton" text="Widok administratora" onAction="#handleAdminClickAction" styleClass="button"/>
             <Button fx:id="LogoutButton" text="Wyloguj się" onAction="#handleLogoutClickAction" styleClass="button"/>
