@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.edu.agh.controller.CatalogController"
+            prefWidth="1000" prefHeight="600">
+    <top>
+        <VBox>
+            <Label id="titleLabel" text="Katalog" styleClass="label"/>
+            <Button id="backButton" text="Powrót" onAction="#handleBackClickAction" styleClass="button" />
+
+            <HBox id="searchBox">
+                <Label text="Wyszukaj książki:" prefWidth="120" />
+                <TextField fx:id="searchTextField" promptText="Wpisz tytuł..." prefWidth="530" />
+                <Button fx:id="searchButton" text="Wyszukaj" onAction="#handleSearchAction" styleClass="button" />
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox id="centerVBox">
+            <TableView fx:id="booksTable" BorderPane.alignment="CENTER">
+                <columns>
+                    <TableColumn fx:id="AuthorColumn" text="Autor"/>
+                    <TableColumn fx:id="TitleColumn" text="Tytuł"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+    <right>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+            <opaqueInsets>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </opaqueInsets>
+            <children>
+                <Button fx:id="selectButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308"
+                        mnemonicParsing="false" onAction="#handleSelectAction" text="Wybierz">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </right>
+    <stylesheets>
+        <URL value="@../styles/CatalogStyles.css" />
+    </stylesheets>
+</BorderPane>

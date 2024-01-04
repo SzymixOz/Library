@@ -20,5 +20,14 @@ public class UserValidator {
         String lastNameRegex = "^[A-Z][a-zA-Z\\-']{1,29}$";
         return checkPattern(mail, lastNameRegex);
     }
+    public static boolean isPasswordStrong(String password) {
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        return checkPattern(password, passwordRegex);
+    }
+    // Password contains at least 8 characters.
+    // Password contains at least one digit.
+    // Password contains at least one upper case alphabet.
+    // Password contains at least one lower case alphabet.
+    // Password contains at least one special character.
 
 }

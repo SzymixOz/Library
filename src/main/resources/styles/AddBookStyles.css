@@ -1,18 +1,26 @@
 
 #centerVBox {
     -fx-alignment: CENTER;
-    -fx-max-height: 450;
-    -fx-max-width: 350;
+    -fx-max-height: 500;
+    -fx-max-width: 650;
     -fx-background-color: #38b8f1;
     -fx-background-radius: 10;
+    -fx-padding: 10px 0;
 }
-
 
 #innerVBox {
     -fx-alignment: CENTER;
     -fx-max-width: 300;
 }
 
+#titleLabel {
+    -fx-alignment: TOP-CENTER;
+    -fx-font-size: 30px;
+    -fx-padding: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-pref-width: 1000;
+}
 
 .label {
     -fx-alignment: CENTER-LEFT;
@@ -21,12 +29,10 @@
     -fx-pref-width: 300;
 }
 
-
 .text-field {
     -fx-pref-width: 200;
     -fx-pref-height: 30;
 }
-
 
 .button {
     -fx-pref-width: 100;
@@ -37,24 +43,16 @@
     -fx-font-weight: bold;
 }
 
+#wideButton {
+    -fx-pref-width: 200;
+}
 
 #resultLabel {
     -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
-    -fx-pref-height: 90;
     -fx-font-size: 14px;
     -fx-padding: 5px;
     -fx-text-fill: #fc1b1b;
     -fx-font-weight: bold;
-}
-
-#titleLabel {
-    -fx-alignment: TOP-CENTER;
-    -fx-font-size: 30px;
-    -fx-padding: 5px;
-    -fx-text-fill: #000000;
-    -fx-font-weight: bold;
-    -fx-pref-width: 1000;
 }
 
 #backButton {

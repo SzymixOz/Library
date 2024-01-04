@@ -7,28 +7,30 @@
 <?import javafx.scene.layout.Pane?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.edu.agh.controller.AddUserController"
+            fx:controller="pl.edu.agh.controller.LoginController"
             prefWidth="1000" prefHeight="600">
     <top>
-        <Label id="titleLabel" text="Dodaj czytelnika" styleClass="label"/>
+        <VBox>
+            <Label id="titleLabel" text="Logowanie" styleClass="label"/>
+        </VBox>
     </top>
     <center>
             <VBox id="centerVBox">
                 <VBox id="innerVBox">
-                    <Label text="Imię" styleClass="label"/>
-                    <TextField fx:id="firstNameField" promptText="Wprowadź imię" styleClass="text-field"/>
-                    <Pane prefHeight="15"/>
-                    <Label text="Nazwisko" styleClass="label"/>
-                    <TextField fx:id="lastNameField" promptText="Wprowadź nazwisko" styleClass="text-field"/>
-                    <Pane prefHeight="15"/>
                     <Label text="E-mail" styleClass="label"/>
                     <TextField fx:id="mailField" promptText="Wprowadź e-mail" styleClass="text-field"/>
+                    <Pane prefHeight="15"/>
+                    <Label text="Hasło" styleClass="label"/>
+                    <TextField fx:id="passwordField" promptText="Wprowadź hasło" styleClass="text-field"/>
                     <Label fx:id="resultLabel" styleClass="label"/>
-                    <Button text="Dodaj" onAction="#handleAddUserAction" styleClass="button"/>
+                    <Pane prefHeight="15"/>
+                    <Button text="Zaloguj" onAction="#handleLoginClickAction" styleClass="button"/>
+                    <Pane prefHeight="15"/>
+                    <Button text="Dodaj użytkownika" onAction="#handleAddUserClickAction" styleClass="button"/>
                 </VBox>
             </VBox>
     </center>
     <stylesheets>
-        <URL value="@../styles/AddUserStyles.css" />
+        <URL value="@../styles/LoginStyles.css" />
     </stylesheets>
 </BorderPane>
