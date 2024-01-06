@@ -2,13 +2,8 @@ package pl.edu.agh.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.model.books.Book;
-import pl.edu.agh.model.books.CoverType;
-import pl.edu.agh.model.books.Rating;
-import pl.edu.agh.model.books.Title;
-import pl.edu.agh.model.loans.HistoricalLoan;
+import pl.edu.agh.model.books.*;
 import pl.edu.agh.model.loans.Loan;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.model.users.User;
@@ -18,15 +13,12 @@ import pl.edu.agh.repository.books.TitleRepository;
 import pl.edu.agh.repository.loans.HistoricalLoanRepository;
 import pl.edu.agh.repository.loans.LoanRepository;
 import pl.edu.agh.repository.users.MemberRepository;
-import pl.edu.agh.repository.users.UserRepository;
 import pl.edu.agh.validator.BookValidator;
 
 import java.sql.Blob;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -47,7 +39,7 @@ public class BookService {
         this.ratingRepository = ratingRepository;
     }
 
-    public String addBook(String title, String author, String isbn, Blob image, String softCoverQuantity, String hardCoverQuantity) {
+    public String addBook(String title, String author, String isbn, BookCategory category, Blob image, String softCoverQuantity, String hardCoverQuantity) {
 
         if (!BookValidator.isTitleValid(title)) {
             return "Niepoprawny tytul";
@@ -72,7 +64,7 @@ public class BookService {
             return "Niepoprawna ilosc ksiazek";
         }
 
-        Title title_db = new Title(isbnLong, title, author, image);
+        Title title_db = new Title(isbnLong, title, author, category, image);
         try {
             titleRepository.save(title_db);
         } catch (Exception e) {

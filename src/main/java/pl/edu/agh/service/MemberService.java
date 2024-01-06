@@ -42,7 +42,7 @@ public class MemberService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
 
-        Member member = new Member(firstName, lastName, email, false, hashedPassword);
+        Member member = new Member(firstName, lastName, email, false, false, hashedPassword);
         try {
             memberRepository.save(member);
             return "Uzytkownik zostal dodany";
@@ -55,7 +55,7 @@ public class MemberService {
         String password = "Haslo1234$";
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
-        Member member = new Member("Member", "Member", "member@wp.pl", false, hashedPassword);
+        Member member = new Member("Member", "Member", "member@wp.pl", false, false, hashedPassword);
         memberRepository.save(member);
     }
 }

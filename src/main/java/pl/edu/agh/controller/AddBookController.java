@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.model.books.BookCategory;
 import pl.edu.agh.service.BookService;
 
 import java.io.File;
@@ -34,6 +36,8 @@ public class AddBookController {
     private TextField authorField;
     @FXML
     private TextField isbnField;
+    @FXML
+    private ChoiceBox<BookCategory> categoryChoiceBox;
     @FXML
     private TextField softCoverQuantityField;
     @FXML
@@ -68,6 +72,8 @@ public class AddBookController {
             loader.setLocation(AddBookController.class.getResource("/view/AddBookView.fxml"));
             BorderPane mainLayout = loader.load();
 
+            categoryChoiceBox.getItems().addAll(BookCategory.values());
+
             Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -75,7 +81,6 @@ public class AddBookController {
             e.printStackTrace();
         }
     }
-
 
     public void chooseImageFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -133,8 +138,9 @@ public class AddBookController {
         String isbn = isbnField.getText();
         String softCoverQuantity = softCoverQuantityField.getText();
         String hardCoverQuantity = hardCoverQuantityField.getText();
+        BookCategory category = (BookCategory) categoryChoiceBox.getValue();
 
-        String result = this.bookService.addBook(title, author, isbn, imageBlob, softCoverQuantity, hardCoverQuantity);
+        String result = this.bookService.addBook(title, author, isbn, category, imageBlob, softCoverQuantity, hardCoverQuantity);
         showResult(result);
     }
 
