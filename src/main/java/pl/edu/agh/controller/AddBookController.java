@@ -51,10 +51,6 @@ public class AddBookController {
 
     private BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @Autowired
     public void setContext(ApplicationContext context) {

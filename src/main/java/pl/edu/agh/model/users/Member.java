@@ -46,6 +46,14 @@ public class Member extends User {
         return newsLetter;
     }
 
+    public Boolean getEmailNotification() {
+        return emailNotification;
+    }
+
+    public void setEmailNotification(Boolean emailNotification) {
+        this.emailNotification = emailNotification;
+    }
+
     public void ban() {
         this.banned = true;
     }
@@ -67,6 +75,7 @@ public class Member extends User {
                 ", isActive=" + isActive +
                 ", password='" + password + '\'' +
                 "newsLetter=" + newsLetter +
+                ", emailNotification=" + emailNotification +
                 ", banned=" + banned +
                 '}';
     }

@@ -39,6 +39,10 @@ public class BookService {
         this.ratingRepository = ratingRepository;
     }
 
+    public LoanRepository getLoanRepository() {
+        return loanRepository;
+    }
+
     public String addBook(String title, String author, String isbn, BookCategory category, Blob image, String softCoverQuantity, String hardCoverQuantity) {
 
         if (!BookValidator.isTitleValid(title)) {
