@@ -13,7 +13,8 @@ import java.util.List;
 @Service
 public class EmailService {
 
-    @Autowired private JavaMailSender javaMailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
     private final LoanRepository loanRepository;
 
     private List<String> emailsAndBooks;
@@ -21,7 +22,6 @@ public class EmailService {
     @Autowired
     public EmailService(LoanRepository loanRepository) {
         this.loanRepository = loanRepository;
-
     }
 
     public void sendEmail(String to, String subject, String text) {
@@ -39,11 +39,11 @@ public class EmailService {
         }
     }
 
-    public List<String> getEmailsForEmailNotifications(Date endDate){
+    public List<String> getEmailsForEmailNotifications(Date endDate) {
         return loanRepository.findEmailsAndBooksForEmailNotification(endDate);
     }
 
-    public List<String> getEmailsForNewsLetter(){
+    public List<String> getEmailsForNewsLetter() {
         return loanRepository.findEmailsForNewsLetter();
     }
 

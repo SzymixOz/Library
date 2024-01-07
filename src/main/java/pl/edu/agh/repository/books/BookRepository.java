@@ -24,4 +24,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> findAvailableBooksByTitleIdAndCoverType(@Param("titleId") int titleId,
                                                        @Param("coverType") CoverType coverType);
 
+    @Query("SELECT COUNT(b) FROM Book b")
+    Integer getAmountOfAllBooks();
+
 }

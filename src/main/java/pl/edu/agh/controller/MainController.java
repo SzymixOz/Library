@@ -27,6 +27,8 @@ public class MainController {
     Button AdminViewButton;
     @FXML
     Button LogoutButton;
+    @FXML
+    public Button ShowStatsButton;
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -60,28 +62,40 @@ public class MainController {
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
+        ShowStatsButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
     }
+
     public void handleCatalogClickAction() {
         CatalogController catalogController = context.getBean(CatalogController.class);
         catalogController.setPrimaryStage(primaryStage);
         catalogController.loadView();
     }
+
     public void handleAddBookClickAction() {
         AddBookController addBookController = context.getBean(AddBookController.class);
         addBookController.setPrimaryStage(primaryStage);
         addBookController.loadView();
     }
+
     public void handleAdminClickAction() {
         AdminController adminController = context.getBean(AdminController.class);
         adminController.setPrimaryStage(primaryStage);
         adminController.loadView();
     }
+
     public void handleSendEmailClickAction() {
         SendEmailController sendEmailController = context.getBean(SendEmailController.class);
         sendEmailController.setPrimaryStage(primaryStage);
         sendEmailController.loadView();
     }
+
+    public void handleShowStatsClickAction() {
+        LibrarianStatsController librarianStatsController = context.getBean(LibrarianStatsController.class);
+        librarianStatsController.setPrimaryStage(primaryStage);
+        librarianStatsController.loadView();
+    }
+
     public void handleLogoutClickAction() {
         UserSession session = UserSession.getInstance();
         session.setUser(null);

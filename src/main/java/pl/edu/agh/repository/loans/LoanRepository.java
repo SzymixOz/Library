@@ -3,6 +3,7 @@ package pl.edu.agh.repository.loans;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import pl.edu.agh.model.response.IBookResponse;
 import pl.edu.agh.model.loans.Loan;
 
 import java.util.Date;
@@ -15,4 +16,11 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
     @Query("SELECT l.member.email FROM Loan l WHERE l.member.newsLetter = true")
     List<String> findEmailsForNewsLetter();
+
+    @Query("SELECT l.book.title.title as title, count(*) as amount FROM Loan l GROUP BY l.book.title ORDER BY count(*) DESC")
+    List<IBookResponse> findTheMostFrequentlyBorrowedBooks();
+
+    @Query("SELECT COUNT(l) FROM Loan l")
+    Integer getAmountOfCurrentlyBorrowedBooks();
+
 }

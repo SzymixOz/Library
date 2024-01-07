@@ -11,4 +11,7 @@ import java.util.List;
 public interface TitleRepository extends JpaRepository<Title, Integer> {
     @Query("SELECT r FROM Rating r WHERE r.title.titleId = :titleId")
     List<Rating> findRatingsByTitleId(@Param("titleId") int titleId);
+
+    @Query("SELECT COUNT(t) FROM Title t")
+    Integer getAmountOfTitles();
 }
