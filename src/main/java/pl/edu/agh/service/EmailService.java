@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.repository.loans.LoanRepository;
 
 import java.io.InputStream;
-import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,18 +64,20 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public List<String> getEmailsForEmailNotifications(Timestamp endDate){
+    public List<String> getEmailsForEmailNotifications(Date endDate){
         return loanRepository.findEmailsAndBooksForEmailNotification(endDate);
     }
 
 
     public void sendEmails() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Timestamp endDateTimestamp = new Timestamp(timestamp.getTime() + 172800000);
-//        LocalDate currentDate = LocalDate.now();
-//        LocalDate endDate = currentDate.plusDays(2);
-        System.out.println(endDateTimestamp);
-        emailsAndBooks = getEmailsForEmailNotifications(endDateTimestamp);
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 2);
+        Date currentDatePlusTwoDays = calendar.getTime();
+
+        System.out.println(currentDatePlusTwoDays);
+        emailsAndBooks = getEmailsForEmailNotifications(currentDatePlusTwoDays);
         System.out.println(emailsAndBooks);
         for (String emailAndBook : emailsAndBooks) {
             System.out.println(emailAndBook);

@@ -14,6 +14,7 @@ public class Loan {
 
     @Temporal(TemporalType.DATE)
     private Date startLoanDate;
+    @Temporal(TemporalType.DATE)
     private Date endLoanDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
