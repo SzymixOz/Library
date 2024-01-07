@@ -13,15 +13,15 @@ public class UserValidator {
         return checkPattern(mail, mailRegex);
     }
     public static boolean isFirstNameValid(String mail) {
-        String firstNameRegex = "^[A-Z][a-z]{1,29}$";
+        String firstNameRegex = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]{1,29}$";
         return checkPattern(mail, firstNameRegex);
     }
     public static boolean isLastNameValid(String mail) {
-        String lastNameRegex = "^[A-Z][a-zA-Z\\-']{1,29}$";
+        String lastNameRegex = "^[A-ZĄĆĘŁŃÓŚŹŻ][a-zA-ZĄąĆćĘęŁłŃńÓóŚśŹźŻż\\-']{1,29}$";
         return checkPattern(mail, lastNameRegex);
     }
     public static boolean isPasswordStrong(String password) {
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-ząćęłńóśźż])(?=.*[A-ZĄĆĘŁŃÓŚŹŻ])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
         return checkPattern(password, passwordRegex);
     }
     // Password contains at least 8 characters.

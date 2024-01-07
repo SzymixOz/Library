@@ -53,6 +53,10 @@ public class AddBookController {
 
 
     @Autowired
+    public AddBookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+    @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
     }
