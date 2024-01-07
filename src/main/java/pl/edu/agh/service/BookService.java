@@ -57,6 +57,10 @@ public class BookService {
             return "Niepoprawny ISBN";
         }
 
+        if (category == null) {
+            return "Niepoprawna kategoria";
+        }
+
         int softCoverQuantityInt;
         int hardCoverQuantityInt;
         long isbnLong = Long.parseLong(isbn);

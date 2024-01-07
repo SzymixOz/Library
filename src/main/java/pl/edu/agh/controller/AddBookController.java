@@ -156,6 +156,7 @@ public class AddBookController {
         titleField.setText(null);
         authorField.setText(null);
         isbnField.setText(null);
+        categoryChoiceBox.setValue(null);
     }
 
     public void handleBackClickAction() {

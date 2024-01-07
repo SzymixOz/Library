@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,11 @@ import java.io.IOException;
 @Component
 public class SendEmailController {
 
+
+    @FXML
+    private TextField newsLetterSubject;
+    @FXML
+    private TextArea newsLetterContent;
     @FXML
     private Label resultLabel;
 
@@ -53,10 +60,22 @@ public class SendEmailController {
     }
 
     public void handleSendEmailAction() {
-        emailService.sendEmails();
+        emailService.sendEmailsNotification();
         showResult("Maile zostały wysłane.");
     }
 
+    public void handleSendNewsLetterAction() {
+        String subject = newsLetterSubject.getText();
+        String content = newsLetterContent.getText();
+        emailService.sendNewsLetter(subject, content);
+        clearInputFields();
+        showResult("Maile zostały wysłane.");
+    }
+
+    private void clearInputFields() {
+        newsLetterSubject.setText(null);
+        newsLetterContent.setText(null);
+    }
 
     private void showResult(String labelText) {
         resultLabel.setStyle("-fx-text-fill: green;");

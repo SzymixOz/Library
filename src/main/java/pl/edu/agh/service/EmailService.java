@@ -43,8 +43,11 @@ public class EmailService {
         return loanRepository.findEmailsAndBooksForEmailNotification(endDate);
     }
 
+    public List<String> getEmailsForNewsLetter(){
+        return loanRepository.findEmailsForNewsLetter();
+    }
 
-    public void sendEmails() {
+    public void sendEmailsNotification() {
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
@@ -59,15 +62,15 @@ public class EmailService {
             String email = emailAndBook.split("#")[0];
             String book = emailAndBook.split("#")[1];
 
-            this.sendEmail(email, "Wyniki z kolokwium",
+            this.sendEmail(email, "Przypomnienie o zwrocie książki",
                     "Przypominamy o zwrocie książki: " + book + ", pozostały Ci już tylko 2 dni.");
-//                        "Witam, \n" +
-//                                "Wyniki z kolokwium są już dostępne na Upel-u.\n\n" +
-//                                "W końcu działa do ku*** nędzy, się z tym pierd*** od 7,5h.\n" +
-//                                "A ostatnie 2h zmarnowane przez zasrane <> znaki w pliku konfiguracyjnym.\n\n" +
-//                                "Przypominamy o zwrocie książki: " + book + ", pozostały Ci już tylko 2 dni.\n\n" +
-//                                "Pozdrawiamy,\n" +
-//                                "Biblioteka AGH");
+        }
+    }
+
+    public void sendNewsLetter(String subject, String text) {
+        List<String> emails = getEmailsForNewsLetter();
+        for (String email : emails) {
+            this.sendEmail(email, subject, text);
         }
     }
 }

@@ -21,6 +21,17 @@
     -fx-pref-width: 1000;
 }
 
+#newsLetterLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+    -fx-pref-width: 300;
+}
 
 .button {
     -fx-pref-width: 100;
@@ -31,8 +42,12 @@
     -fx-font-weight: bold;
 }
 
+#newsLetterButton {
+    -fx-pref-width: 200;
+}
+
 #wideButton {
-    -fx-pref-width: 500;
+    -fx-pref-width: 400;
 }
 
 #resultLabel {
