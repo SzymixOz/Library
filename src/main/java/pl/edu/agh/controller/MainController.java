@@ -77,6 +77,11 @@ public class MainController {
         adminController.setPrimaryStage(primaryStage);
         adminController.loadView();
     }
+    public void handleSendEmailClickAction() {
+        SendEmailController sendEmailController = context.getBean(SendEmailController.class);
+        sendEmailController.setPrimaryStage(primaryStage);
+        sendEmailController.loadView();
+    }
     public void handleLogoutClickAction() {
         UserSession session = UserSession.getInstance();
         session.setUser(null);

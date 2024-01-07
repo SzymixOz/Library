@@ -16,6 +16,7 @@
             <Button fx:id="CatalogButton" text="Katalog" onAction="#handleCatalogClickAction" styleClass="button"/>
             <Button fx:id="AddBookButton" text="Dodaj książkę" onAction="#handleAddBookClickAction" styleClass="button"/>
             <Button fx:id="AdminViewButton" text="Widok administratora" onAction="#handleAdminClickAction" styleClass="button"/>
+            <Button fx:id="SendEmailButton" text="Wyślij email" onAction="#handleSendEmailClickAction" styleClass="button"/>
             <Button fx:id="LogoutButton" text="Wyloguj się" onAction="#handleLogoutClickAction" styleClass="button"/>
         </VBox>
     </center>
