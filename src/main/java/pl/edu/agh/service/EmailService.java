@@ -1,14 +1,11 @@
 package pl.edu.agh.service;
 
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.repository.loans.LoanRepository;
 
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +13,7 @@ import java.util.List;
 @Service
 public class EmailService {
 
-    private final JavaMailSender emailSender;
+    @Autowired private JavaMailSender javaMailSender;
     private final LoanRepository loanRepository;
 
     private List<String> emailsAndBooks;
@@ -24,33 +21,6 @@ public class EmailService {
     @Autowired
     public EmailService(LoanRepository loanRepository) {
         this.loanRepository = loanRepository;
-        this.emailSender = new JavaMailSender() {
-            @Override
-            public MimeMessage createMimeMessage() {
-                return null;
-            }
-
-            @Override
-            public MimeMessage createMimeMessage(InputStream contentStream) throws MailException {
-                return null;
-            }
-
-            @Override
-            public void send(MimeMessage... mimeMessages) throws MailException {
-
-            }
-
-            @Override
-            public void send(SimpleMailMessage simpleMailMessage) {
-
-            }
-
-            @Override
-            public void send(SimpleMailMessage... simpleMailMessages) throws org.springframework.mail.MailException {
-
-            }
-        };
-
 
     }
 
@@ -61,7 +31,12 @@ public class EmailService {
         message.setSubject(subject);
         message.setText(text);
 
-        emailSender.send(message);
+        try {
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            System.out.println("Error while sending email to: " + to);
+            System.out.println(e);
+        }
     }
 
     public List<String> getEmailsForEmailNotifications(Date endDate){
@@ -84,8 +59,15 @@ public class EmailService {
             String email = emailAndBook.split("#")[0];
             String book = emailAndBook.split("#")[1];
 
-            this.sendEmail(email, "Przypominamy o zwrocie książki",
+            this.sendEmail(email, "Wyniki z kolokwium",
                     "Przypominamy o zwrocie książki: " + book + ", pozostały Ci już tylko 2 dni.");
+//                        "Witam, \n" +
+//                                "Wyniki z kolokwium są już dostępne na Upel-u.\n\n" +
+//                                "W końcu działa do ku*** nędzy, się z tym pierd*** od 7,5h.\n" +
+//                                "A ostatnie 2h zmarnowane przez zasrane <> znaki w pliku konfiguracyjnym.\n\n" +
+//                                "Przypominamy o zwrocie książki: " + book + ", pozostały Ci już tylko 2 dni.\n\n" +
+//                                "Pozdrawiamy,\n" +
+//                                "Biblioteka AGH");
         }
     }
 }

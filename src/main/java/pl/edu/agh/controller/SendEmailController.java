@@ -57,6 +57,7 @@ public class SendEmailController {
         showResult("Maile zostały wysłane.");
     }
 
+
     private void showResult(String labelText) {
         resultLabel.setStyle("-fx-text-fill: green;");
         resultLabel.setText(labelText);
