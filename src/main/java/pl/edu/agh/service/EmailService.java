@@ -56,7 +56,7 @@ public class EmailService {
 
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@baeldung.com");
+        message.setFrom("noreply@biblioteka.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -80,9 +80,12 @@ public class EmailService {
         emailsAndBooks = getEmailsForEmailNotifications(currentDatePlusTwoDays);
         System.out.println(emailsAndBooks);
         for (String emailAndBook : emailsAndBooks) {
-            System.out.println(emailAndBook);
-//            this.sendEmail(emailAndBook.split(''), "Przypomnienie o zwrocie książki",
-//                    "Przypominamy o zwrocie książki: .");
+            emailAndBook = emailAndBook.replaceFirst(",", "#");
+            String email = emailAndBook.split("#")[0];
+            String book = emailAndBook.split("#")[1];
+
+            this.sendEmail(email, "Przypominamy o zwrocie książki",
+                    "Przypominamy o zwrocie książki: " + book + ", pozostały Ci już tylko 2 dni.");
         }
     }
 }

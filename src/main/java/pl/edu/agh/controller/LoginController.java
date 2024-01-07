@@ -98,9 +98,6 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
         } else if (librarianService.findByEmail(mail) != null) {
             user = librarianService.findByEmail(mail);
             role = UserRoleEnum.LIBRARIAN;
-
-                    EmailService emailService = new EmailService(this.bookService.getLoanRepository());
-                    emailService.sendEmails();
         }
         if (role == UserRoleEnum.NOT_LOGGED) {
             resultLabel.setText("Bledny e-mail lub haslo");
