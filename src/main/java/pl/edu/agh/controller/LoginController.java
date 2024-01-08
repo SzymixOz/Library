@@ -37,12 +37,8 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
     private AdminService adminService;
     private LibrarianService librarianService;
     private ApplicationContext context;
-    private BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
+
     @Autowired
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
