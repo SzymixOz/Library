@@ -5,7 +5,7 @@
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pl.edu.agh.controller.LibrarianStatsController"
+            fx:controller="pl.edu.agh.controller.UserStatsController"
             prefWidth="1000" prefHeight="600">
     <top>
         <VBox>
@@ -17,7 +17,7 @@
         <VBox id="centerVBox">
             <VBox id="innerVBox">
                 <VBox>
-                    <Label id="title" text="Najczęściej 5 wypożyczane tytuły - aktualnie" styleClass="label"/>
+                    <Label id="title" text="Aktualnie wypożyczone przez użytkownika" styleClass="label"/>
                 </VBox>
                 <TableView fx:id="mostCurrentTable" BorderPane.alignment="CENTER"  >
                     <columns>
@@ -29,7 +29,7 @@
                     </columnResizePolicy>
                 </TableView>
                 <VBox>
-                    <Label id="title" text="Najczęściej 5 wypożyczane tytuły - archiwalnie" styleClass="label"/>
+                    <Label id="title" text="Zakończone wypożyczenie przez użytkownika" styleClass="label"/>
                 </VBox>
                 <TableView fx:id="mostHistoricalTable" BorderPane.alignment="CENTER">
                     <columns>
@@ -40,6 +40,14 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
+                <Label text="Ilość aktualnie wypożyczeń przez użytkownika:">
+                </Label>
+                <TextField fx:id="amountCurrentLoansField" GridPane.columnIndex="1" disable="true">
+                </TextField>
+                <Label text="Ilość zakończonych wypożyczeń przez użytkownika:">
+                </Label>
+                <TextField fx:id="amountHistoricalLoansField" GridPane.columnIndex="1" disable="true">
+                </TextField>
             </VBox>
         </VBox>
     </center>

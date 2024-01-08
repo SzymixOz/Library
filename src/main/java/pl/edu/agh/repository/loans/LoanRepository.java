@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.edu.agh.model.response.IBookResponse;
 import pl.edu.agh.model.loans.Loan;
+import pl.edu.agh.model.users.User;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,12 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
     @Query("SELECT l.book.title.title as title, count(*) as amount FROM Loan l GROUP BY l.book.title ORDER BY count(*) DESC")
     List<IBookResponse> findTheMostFrequentlyBorrowedBooks();
 
+    @Query("SELECT l.book.title.title as title, count(*) as amount FROM Loan l WHERE l.member=:user GROUP BY l.book.title ORDER BY count(*) DESC")
+    List<IBookResponse> findTheMostFrequentlyBorrowedBooksByUser(@Param("user") User user);
+
     @Query("SELECT COUNT(l) FROM Loan l")
     Integer getAmountOfCurrentlyBorrowedBooks();
 
+    @Query("SELECT COUNT(l) FROM Loan l where l.member=:user")
+    Integer getAmountOfCurrentlyBorrowedBooksByUser(@Param ("user") User user);
 }

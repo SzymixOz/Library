@@ -28,8 +28,9 @@ public class MainController {
     @FXML
     Button LogoutButton;
     @FXML
-    public Button ShowStatsButton;
-
+    Button ShowStatsLibrarianButton;
+    @FXML
+    Button ShowStatsUserButton;
     @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
@@ -62,7 +63,8 @@ public class MainController {
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
-        ShowStatsButton.setVisible(role == UserRoleEnum.LIBRARIAN);
+        ShowStatsLibrarianButton.setVisible(role == UserRoleEnum.LIBRARIAN);
+        ShowStatsUserButton.setVisible(role == UserRoleEnum.MEMBER);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
     }
 
@@ -90,10 +92,16 @@ public class MainController {
         sendEmailController.loadView();
     }
 
-    public void handleShowStatsClickAction() {
+    public void handleShowStatsLibrarianClickAction() {
         LibrarianStatsController librarianStatsController = context.getBean(LibrarianStatsController.class);
         librarianStatsController.setPrimaryStage(primaryStage);
         librarianStatsController.loadView();
+    }
+
+    public void handleShowStatsUserClickAction() {
+        UserStatsController userStatsController = context.getBean(UserStatsController.class);
+        userStatsController.setPrimaryStage(primaryStage);
+        userStatsController.loadView();
     }
 
     public void handleLogoutClickAction() {

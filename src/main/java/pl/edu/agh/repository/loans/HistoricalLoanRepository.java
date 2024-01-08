@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import pl.edu.agh.model.response.IBookResponse;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.loans.HistoricalLoan;
+import pl.edu.agh.model.users.User;
 
 import java.util.List;
 
@@ -15,4 +16,10 @@ public interface HistoricalLoanRepository extends JpaRepository<HistoricalLoan, 
 
     @Query("SELECT l.book.title.title as title, count(*) as amount FROM HistoricalLoan l GROUP BY l.book.title ORDER BY count(*) DESC")
     List<IBookResponse> findTheMostFrequentlyBorrowedBooks();
+
+    @Query("SELECT l.book.title.title as title, count(*) as amount FROM HistoricalLoan l WHERE l.member=:user GROUP BY l.book.title ORDER BY count(*) DESC")
+    List<IBookResponse> findTheMostFrequentlyBorrowedBooksByUser(@Param("user") User user);
+
+    @Query("SELECT COUNT(l) FROM HistoricalLoan l where l.member=:user")
+    Integer getAmountHistoricallyBorrowedBooksByUser(@Param ("user") User user);
 }
