@@ -89,6 +89,15 @@ public class CatalogController {
         selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
 
         initRadioButtons();
+        refreshCards();
+    }
+
+    private void refreshCards() {
+        bookCards.getChildren().clear();
+        for (Title book : titleList) {
+            AnchorPane card = createBookCard(book);
+            bookCards.getChildren().add(card);
+        }
     }
 
     private void initRadioButtons() {
@@ -98,11 +107,6 @@ public class CatalogController {
         tableRadioButton.setSelected(true);
         cardsContainer.setVisible(false);
         cardsContainer.setManaged(false);
-        for (Title book : titleList) {
-            AnchorPane card = createBookCard(book);
-            bookCards.getChildren().add(card);
-        }
-
         tableRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 booksTable.setVisible(true);
@@ -135,6 +139,8 @@ public class CatalogController {
         }
         imageView.setFitWidth(180);
         imageView.setFitHeight(230);
+        imageView.setOnMouseClicked(event -> handleDetailsAction(book));
+
         AnchorPane.setTopAnchor(imageView, 0.0);
         AnchorPane.setLeftAnchor(imageView, 0.0);
         AnchorPane.setRightAnchor(imageView, 0.0);
@@ -154,6 +160,15 @@ public class CatalogController {
         card.getChildren().addAll(imageView, titleLabel, authorLabel);
         return card;
     }
+
+    public void handleDetailsAction(Title title) {
+        SingleBookController singleBookController = context.getBean(SingleBookController.class);
+        singleBookController.setTitle(title);
+        singleBookController.setPrimaryStage(primaryStage);
+        singleBookController.loadView();
+    }
+
+
     public void handleBackClickAction() {
         MainController mainController = context.getBean(MainController.class);
         mainController.setPrimaryStage(primaryStage);
@@ -168,6 +183,7 @@ public class CatalogController {
         singleBookController.setPrimaryStage(primaryStage);
         singleBookController.loadView();
     }
+
     public void handleSearchAction() {
         booksTable.getItems().clear();
         String prefix = searchTextField.getText();
