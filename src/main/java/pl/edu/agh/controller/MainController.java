@@ -33,6 +33,8 @@ public class MainController {
     Button ShowStatsUserButton;
     @FXML
     Button BorrowedBooksButton;
+    @FXML
+    Button SendEmailButton;
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -64,12 +66,21 @@ public class MainController {
         UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
+        CatalogButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
         BorrowedBooksButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
+        BorrowedBooksButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
+        AddBookButton.setManaged(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
+        AdminViewButton.setManaged(role == UserRoleEnum.ADMIN);
         ShowStatsLibrarianButton.setVisible(role == UserRoleEnum.LIBRARIAN);
+        ShowStatsLibrarianButton.setManaged(role == UserRoleEnum.LIBRARIAN);
         ShowStatsUserButton.setVisible(role == UserRoleEnum.MEMBER);
+        ShowStatsUserButton.setManaged(role == UserRoleEnum.MEMBER);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
+        LogoutButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
+        SendEmailButton.setVisible(role == UserRoleEnum.LIBRARIAN);
+        SendEmailButton.setManaged(role == UserRoleEnum.LIBRARIAN);
     }
 
     public void handleCatalogClickAction() {
