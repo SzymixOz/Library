@@ -1,15 +1,15 @@
 # Projekt czytelnia
 
 ## Autorzy
-* Marcin Chudy
 * Szymon Ożóg
+* Marcin Chudy
 * Wiktor Satora
 * Marek Żuwała
 
 ## Wstęp
 Aplikacja została stworzona w oparciu o framework Spring Boot 3.2
 Interfejs użytkonika wykonany przy użyciu JavaFX
-Do obsługi bazdy danych użyto Hibernate JPA
+Do obsługi bazy danych użyto Hibernate JPA
 
 Aplikacja jest uruchamiana na adresie `localhost:8080`
 
