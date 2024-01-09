@@ -4,6 +4,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.model.books.*;
+import pl.edu.agh.model.books.Book;
+import pl.edu.agh.model.books.CoverType;
+import pl.edu.agh.model.books.Rating;
+import pl.edu.agh.model.books.Title;
+import pl.edu.agh.model.extra.HistoricalLoanDetails;
+import pl.edu.agh.model.extra.LoanDetails;
+import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.loans.Loan;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.model.users.User;
@@ -151,5 +158,23 @@ public class BookService {
 
         return ratingRepository.saveAndFlush(rating);
     }
+    public List<LoanDetails> getAllUserLoans(User user) {
+        return loanRepository.findAllLoansByUserId(user.getUserId());
+    }
 
+    public List<HistoricalLoanDetails> getAllUserHistoricalLoans(User user) {
+        return historicalLoanRepository.findAllHistoricalLoansByUserId(user.getUserId());
+    }
+
+    @Transactional
+    public HistoricalLoan returnBook(int loanId) {
+        Loan loan = loanRepository.findById(loanId).orElseThrow(RuntimeException::new);
+
+        HistoricalLoan historicalLoan = new HistoricalLoan(loan.getStartLoanDate(), loan.getEndLoanDate(), new Date(), loan.getMember(), loan.getBook());
+
+        HistoricalLoan savedHistoricalLoan = historicalLoanRepository.saveAndFlush(historicalLoan);
+        loanRepository.deleteByLoanId(loan.getLoanId());
+
+        return savedHistoricalLoan;
+    }
 }

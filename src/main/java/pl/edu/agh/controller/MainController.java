@@ -31,6 +31,8 @@ public class MainController {
     Button ShowStatsLibrarianButton;
     @FXML
     Button ShowStatsUserButton;
+    Button BorrowedBooksButton;
+
     @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
@@ -61,6 +63,7 @@ public class MainController {
         UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
+        BorrowedBooksButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         AddBookButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         AdminViewButton.setVisible(role == UserRoleEnum.ADMIN);
         ShowStatsLibrarianButton.setVisible(role == UserRoleEnum.LIBRARIAN);
@@ -73,7 +76,11 @@ public class MainController {
         catalogController.setPrimaryStage(primaryStage);
         catalogController.loadView();
     }
-
+    public void handleShowBorrowedClickAction() {
+        BorrowedBooksController borrowedBooksController = context.getBean(BorrowedBooksController.class);
+        borrowedBooksController.setPrimaryStage(primaryStage);
+        borrowedBooksController.loadView();
+    }
     public void handleAddBookClickAction() {
         AddBookController addBookController = context.getBean(AddBookController.class);
         addBookController.setPrimaryStage(primaryStage);
@@ -112,5 +119,4 @@ public class MainController {
         loginController.setPrimaryStage(primaryStage);
         loginController.loadView();
     }
-
 }
