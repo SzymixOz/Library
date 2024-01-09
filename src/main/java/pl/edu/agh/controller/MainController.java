@@ -31,6 +31,7 @@ public class MainController {
     Button ShowStatsLibrarianButton;
     @FXML
     Button ShowStatsUserButton;
+    @FXML
     Button BorrowedBooksButton;
 
     @Autowired

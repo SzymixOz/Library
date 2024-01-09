@@ -35,7 +35,7 @@
                     <TableColumn fx:id="HistoricalTitleColumn" text="Tytuł"/>
                     <TableColumn fx:id="HistoricalStartDateColumn" text="Początek wypożyczenia"/>
                     <TableColumn fx:id="HistoricalEndDateColumn" text="Koniec wypożyczenia"/>
-                    <TableColumn fx:id="HistoricalReturnDateColumn" text="Koniec wypożyczenia"/>
+                    <TableColumn fx:id="HistoricalReturnDateColumn" text="Data zwrócenia"/>
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
