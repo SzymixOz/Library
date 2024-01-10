@@ -28,6 +28,4 @@ public interface HistoricalLoanRepository extends JpaRepository<HistoricalLoan, 
     Integer getAmountHistoricallyBorrowedBooksByUser(@Param ("user") User user);
     @Query("SELECT new pl.edu.agh.model.extra.HistoricalLoanDetails(h.book.title, h.startLoanDate, h.endLoanDate, h.returnLoanDate) FROM HistoricalLoan h WHERE h.member.userId = :userId")
     List<HistoricalLoanDetails> findAllHistoricalLoansByUserId(@Param("userId") long userId);
-
-
 }

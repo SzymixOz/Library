@@ -90,7 +90,6 @@ public class CatalogController {
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-
         selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
 
         initRadioButtons();
