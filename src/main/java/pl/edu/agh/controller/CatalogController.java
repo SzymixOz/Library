@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.model.books.BookCategory;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.service.BookService;
 
@@ -32,6 +33,8 @@ public class CatalogController {
     @FXML
     public TableColumn<Title, String> TitleColumn;
     @FXML
+    public TableColumn<Title, BookCategory> CategoryColumn;
+    @FXML
     private Button selectButton;
     @FXML
     private Button searchButton;
@@ -48,12 +51,12 @@ public class CatalogController {
     private Stage primaryStage;
     private ApplicationContext context;
     private final BookService bookService;
+    private List<Title> initialTitlesList;
     private List<Title> titleList;
 
     @Autowired
     public CatalogController(BookService bookService) {
         this.bookService = bookService;
-        titleList = bookService.getAllTitles();
     }
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -81,10 +84,12 @@ public class CatalogController {
     public void initialize() {
         booksTable.getItems().clear();
         booksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        List<Title> titleList = bookService.getAllTitles();
+        titleList = initialTitlesList = bookService.getAllTitles();
         booksTable.getItems().addAll(titleList);
         AuthorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
 
         selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
 
@@ -176,17 +181,18 @@ public class CatalogController {
     }
 
     public void handleSelectAction() {
-        Title title = booksTable.getSelectionModel().getSelectedItem();
+        handleDetailsAction(booksTable.getSelectionModel().getSelectedItem());
+    }
 
-        SingleBookController singleBookController = context.getBean(SingleBookController.class);
-        singleBookController.setTitle(title);
-        singleBookController.setPrimaryStage(primaryStage);
-        singleBookController.loadView();
+    private void refreshBooksTable() {
+        booksTable.getItems().clear();
+        booksTable.getItems().addAll(titleList);
     }
 
     public void handleSearchAction() {
-        booksTable.getItems().clear();
         String prefix = searchTextField.getText();
-        booksTable.getItems().addAll(titleList.stream().filter(t -> t.getTitle().startsWith(prefix)).toList());
+        titleList = initialTitlesList.stream().filter(t -> t.getTitle().startsWith(prefix)).toList();
+        refreshBooksTable();
+        refreshCards();
     }
 }

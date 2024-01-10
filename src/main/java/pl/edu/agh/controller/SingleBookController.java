@@ -46,6 +46,8 @@ public class SingleBookController {
     @FXML
     private TextField titleTextField;
     @FXML
+    private TextField categoryTextField;
+    @FXML
     private TextField availableSoftTextField;
     @FXML
     private TextField availableHardTextField;
@@ -108,6 +110,7 @@ public class SingleBookController {
         numberOfAvailableHard = bookService.getNumberOfAvailableBooks(title.getTitleId(), CoverType.HARD);
         authorTextField.setText(title.getAuthor());
         titleTextField.setText(title.getTitle());
+        categoryTextField.setText(title.getCategory().toString());
         availableSoftTextField.setText(numberOfAvailableSoft.toString());
         availableHardTextField.setText(numberOfAvailableHard.toString());
 

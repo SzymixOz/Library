@@ -26,6 +26,7 @@
                 <columns>
                     <TableColumn fx:id="AuthorColumn" text="Autor"/>
                     <TableColumn fx:id="TitleColumn" text="Tytuł"/>
+                    <TableColumn fx:id="CategoryColumn" text="Kategoria"/>
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
