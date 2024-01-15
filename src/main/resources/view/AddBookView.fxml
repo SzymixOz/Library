@@ -25,15 +25,20 @@
                 <Label text="Autor" styleClass="label"/>
                 <TextField fx:id="authorField" promptText="Wprowadź autora" styleClass="text-field"/>
                 <Pane prefHeight="15"/>
+                <Label text="Kategoria" styleClass="label"/>
+                <ChoiceBox fx:id="categoryChoiceBox" styleClass="choice-box"/>
+                <Pane prefHeight="15"/>
                 <Label text="Numer ISBN" styleClass="label"/>
                 <TextField fx:id="isbnField" promptText="Wprowadź numer ISBN" styleClass="text-field"/>
                 <Pane prefHeight="15"/>
+
                 <Label text="Liczba egzemplarzy" styleClass="label"/>
                 <Label text="Miękka oprawa" styleClass="label"/>
                 <TextField fx:id="softCoverQuantityField" promptText="Wprowadź liczbę egzemplarzy" styleClass="text-field"/>
                 <Label text="Twarda oprawa" styleClass="label"/>
                 <TextField fx:id="hardCoverQuantityField" promptText="Wprowadź liczbę egzemplarzy" styleClass="text-field"/>
                 <Pane prefHeight="15"/>
+
                 <Label text="Okładka" styleClass="label"/>
                 <Button id="wideButton" text="Przeglądaj..." onAction="#chooseImageFile" styleClass="button"/>
                 <Pane prefHeight="15"/>

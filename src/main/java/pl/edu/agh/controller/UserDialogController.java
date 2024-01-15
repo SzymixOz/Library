@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,9 @@ public class UserDialogController {
     public CheckBox newsletterCheckBox;
     public TextField phoneNumberField;
     public TextField roomField;
+    public VBox memberVBox;
+    public VBox adminVBox;
+    public VBox adminVBoxLabels;
     private Stage dialogStage;
 
     private boolean approved;
@@ -67,15 +71,14 @@ public class UserDialogController {
         emailField.setText(user.getEmail());
         if (user instanceof Member memberUser) {
             bannedCheckBox.setSelected(memberUser.getBanned());
-            bannedCheckBox.setVisible(true);
             newsletterCheckBox.setSelected(memberUser.getNewsLetter());
-            newsletterCheckBox.setVisible(true);
+            memberVBox.setVisible(true);
         }
         if (user instanceof Admin adminUser) {
             roomField.setText(String.valueOf(adminUser.getRoom()));
-            roomField.setVisible(true);
             phoneNumberField.setText(adminUser.getPhoneNumber());
-            phoneNumberField.setVisible(true);
+            adminVBox.setVisible(true);
+            adminVBoxLabels.setVisible(true);
         }
     }
 

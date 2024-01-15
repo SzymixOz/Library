@@ -104,12 +104,12 @@ public class AdminController {
     private void handleEditAction(ActionEvent event) {
         User user = usersTable.getSelectionModel().getSelectedItem();
         if (user != null) {
-            User newUser = showTransactionEditDialog(user);
+            User newUser = showUserEditDialog(user);
             usersTable.getItems().set(usersTable.getSelectionModel().getSelectedIndex(), adminService.findAllUsersByEmail(newUser.getEmail()));
         }
     }
 
-    public User showTransactionEditDialog(User user) {
+    public User showUserEditDialog(User user) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(aClass -> context.getBean(aClass));

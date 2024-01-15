@@ -11,6 +11,7 @@ import java.util.List;
 public class Member extends User {
 
     private Boolean newsLetter;
+    private Boolean emailNotification;
     private Boolean banned;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")
@@ -19,9 +20,10 @@ public class Member extends User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "member")
     private List<HistoricalLoan> historicalLoans;
 
-    public Member(String firstName, String lastName, String email, Boolean newsLetter, String password) {
+    public Member(String firstName, String lastName, String email, Boolean newsLetter, Boolean emailNotification, String password) {
         super(firstName, lastName, email, password, AccountType.MEMBER);
         this.newsLetter = newsLetter;
+        this.emailNotification = emailNotification;
         this.banned = false;
     }
 
@@ -42,6 +44,14 @@ public class Member extends User {
 
     public Boolean getNewsLetter() {
         return newsLetter;
+    }
+
+    public Boolean getEmailNotification() {
+        return emailNotification;
+    }
+
+    public void setEmailNotification(Boolean emailNotification) {
+        this.emailNotification = emailNotification;
     }
 
     public void ban() {
@@ -65,6 +75,7 @@ public class Member extends User {
                 ", isActive=" + isActive +
                 ", password='" + password + '\'' +
                 "newsLetter=" + newsLetter +
+                ", emailNotification=" + emailNotification +
                 ", banned=" + banned +
                 '}';
     }

@@ -29,7 +29,10 @@
                     <TextField text="Tytuł: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
                     <TextField fx:id="titleTextField" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
                 </HBox>
-
+                <HBox>
+                    <TextField text="Gatunek: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
+                    <TextField fx:id="categoryTextField" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
+                </HBox>
                 <TextField text="Liczba dostępnych książek: " id="coverType"  editable="false" mouseTransparent="true" focusTraversable="false"/>
                 <HBox>
                     <TextField text="w miękkiej oprawce: " id="coverTypeName" editable="false" mouseTransparent="true" focusTraversable="false"/>

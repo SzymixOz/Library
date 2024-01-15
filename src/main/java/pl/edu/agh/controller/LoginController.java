@@ -15,9 +15,7 @@ import org.springframework.stereotype.Component;
 import pl.edu.agh.enums.UserRoleEnum;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.model.users.User;
-import pl.edu.agh.service.AdminService;
-import pl.edu.agh.service.LibrarianService;
-import pl.edu.agh.service.MemberService;
+import pl.edu.agh.service.*;
 import pl.edu.agh.session.UserSession;
 import pl.edu.agh.stage.StageReadyEvent;
 
@@ -39,6 +37,7 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
     private AdminService adminService;
     private LibrarianService librarianService;
     private ApplicationContext context;
+
 
     @Autowired
     public void setMemberService(MemberService memberService) {

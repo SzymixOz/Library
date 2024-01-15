@@ -45,8 +45,20 @@
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
                 </Label>
+                <VBox fx:id="adminVBoxLabels" visible="false" GridPane.rowIndex="5">
+                    <Label text="Numer pokoju" GridPane.rowIndex="3">
+                        <GridPane.margin>
+                            <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <Label text="Numer telefonu" GridPane.rowIndex="4">
+                        <GridPane.margin>
+                            <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                </VBox>
 
-                <TextField fx:id="uidField" GridPane.columnIndex="1">
+                <TextField fx:id="uidField" GridPane.columnIndex="1" disable="true">
                     <GridPane.margin>
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
@@ -75,22 +87,22 @@
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
                 </TextField>
-                <CheckBox fx:id="bannedCheckBox" text="Is banned" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                          visible="false"/>
-                <CheckBox fx:id="newsletterCheckBox" text="Send newsletter" GridPane.columnIndex="1"
-                          GridPane.rowIndex="6" visible="false"/>
-                <TextField fx:id="roomField" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"
-                           text="Numer pokoju">
+                <VBox fx:id="memberVBox" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <CheckBox fx:id="bannedCheckBox" text="Is banned"/>
+                <CheckBox fx:id="newsletterCheckBox" text="Send newsletter"/>
+                </VBox>
+                <VBox fx:id="adminVBox" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <TextField fx:id="roomField" text="Numer pokoju">
                     <GridPane.margin>
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"
-                           text="Numer telefonu">
+                <TextField fx:id="phoneNumberField" text="Numer telefonu">
                     <GridPane.margin>
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
                 </TextField>
+                </VBox>
             </children>
         </GridPane>
     </center>

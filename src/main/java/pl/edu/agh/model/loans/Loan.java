@@ -12,6 +12,34 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int loanId;
 
+    @Temporal(TemporalType.DATE)
+    private Date startLoanDate;
+    @Temporal(TemporalType.DATE)
+    private Date endLoanDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private Member member;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "book_id", referencedColumnName = "bookId")
+    private Book book;
+
+
+    public Loan(Date startLoanDate, Date endLoanDate, Member member, Book book) {
+        this.startLoanDate = startLoanDate;
+        this.endLoanDate = endLoanDate;
+        this.member = member;
+        this.book = book;
+    }
+
+    public Loan() {
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
     public int getLoanId() {
         return loanId;
     }
@@ -47,30 +75,4 @@ public class Loan {
     public Book getBook() {
         return book;
     }
-
-    public Loan(Date startLoanDate, Date endLoanDate, Member member, Book book) {
-        this.startLoanDate = startLoanDate;
-        this.endLoanDate = endLoanDate;
-        this.member = member;
-        this.book = book;
-    }
-
-    public Loan() {
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-    @Temporal(TemporalType.DATE)
-    private Date startLoanDate;
-    private Date endLoanDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", referencedColumnName = "userId")
-    private Member member;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="book_id", referencedColumnName = "bookId")
-    private Book book;
-
 }

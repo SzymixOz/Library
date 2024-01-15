@@ -60,7 +60,7 @@ public class AdminService {
 
     public void changeAdminToMember(Admin user) {
         adminRepository.delete(user);
-        memberRepository.save(new Member(user.getFirstName(), user.getLastName(), user.getEmail(), false, user.getPassword()));
+        memberRepository.save(new Member(user.getFirstName(), user.getLastName(), user.getEmail(), false, false, user.getPassword()));
     }
 
     public void changeAdminToLibrarian(Admin user) {
@@ -70,7 +70,7 @@ public class AdminService {
 
     public void changeLibrarianToMember(Librarian user) {
         librarianRepository.delete(user);
-        memberRepository.save(new Member(user.getFirstName(), user.getLastName(), user.getEmail(), false, user.getPassword()));
+        memberRepository.save(new Member(user.getFirstName(), user.getLastName(), user.getEmail(), false, false, user.getPassword()));
     }
 
     public void changeLibrarianToAdmin(Librarian user) {

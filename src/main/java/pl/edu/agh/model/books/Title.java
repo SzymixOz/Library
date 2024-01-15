@@ -14,16 +14,18 @@ public class Title {
     private long isbn;
     private String title;
     private String author;
+    private BookCategory category;
 
     @Lob
     private Blob image;
 
     //raczej go nie interesuje lista booków, więc jej nie wrzucam
 
-    public Title(Long isbn, String title, String author, Blob image) {
+    public Title(Long isbn, String title, String author, BookCategory category, Blob image) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
+        this.category = category;
         this.image = image;
     }
 
@@ -57,6 +59,14 @@ public class Title {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public BookCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(BookCategory category) {
+        this.category = category;
     }
 
     public Blob getImage() {
