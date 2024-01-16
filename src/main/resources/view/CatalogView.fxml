@@ -24,9 +24,9 @@
         <VBox id="centerVBox">
             <TableView fx:id="booksTable" BorderPane.alignment="CENTER">
                 <columns>
-                    <TableColumn fx:id="AuthorColumn" text="Autor"/>
-                    <TableColumn fx:id="TitleColumn" text="Tytuł"/>
-                    <TableColumn fx:id="CategoryColumn" text="Kategoria"/>
+                    <TableColumn id="column" fx:id="AuthorColumn" text="Autor"/>
+                    <TableColumn id="column" fx:id="TitleColumn" text="Tytuł"/>
+                    <TableColumn id="column" fx:id="CategoryColumn" text="Kategoria"/>
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

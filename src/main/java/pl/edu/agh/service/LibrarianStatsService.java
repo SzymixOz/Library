@@ -3,7 +3,6 @@ package pl.edu.agh.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.model.response.IBookResponse;
-import pl.edu.agh.repository.books.BookRepository;
 import pl.edu.agh.repository.books.TitleRepository;
 import pl.edu.agh.repository.loans.HistoricalLoanRepository;
 import pl.edu.agh.repository.loans.LoanRepository;
@@ -14,14 +13,12 @@ import java.util.List;
 public class LibrarianStatsService {
     private final LoanRepository loanRepository;
     private final HistoricalLoanRepository historicalLoanRepository;
-    private final BookRepository bookRepository;
     private final TitleRepository titleRepository;
 
     @Autowired
-    public LibrarianStatsService(LoanRepository loanRepository, HistoricalLoanRepository historicalLoanRepository, BookRepository bookRepository, TitleRepository titleRepository) {
+    public LibrarianStatsService(LoanRepository loanRepository, HistoricalLoanRepository historicalLoanRepository, TitleRepository titleRepository) {
         this.loanRepository = loanRepository;
         this.historicalLoanRepository = historicalLoanRepository;
-        this.bookRepository = bookRepository;
         this.titleRepository = titleRepository;
     }
 
@@ -37,7 +34,7 @@ public class LibrarianStatsService {
         return titleRepository.getAmountOfTitles();
     }
     public Integer getAmountOfAllBooks() {
-        return bookRepository.getAmountOfAllBooks();
+        return titleRepository.getAmountOfAllBooks();
     }
     public Integer getAmountOfCurrentlyBorrowedBooks() {
         return loanRepository.getAmountOfCurrentlyBorrowedBooks();

@@ -16,7 +16,7 @@
     </top>
     <center>
         <VBox id="centerVBox">
-            <Label id="tableTitle" text="Aktualnie wypożyczone książki" styleClass="label"/>
+            <TextField id="tableTitle" fx:id="amountCurrentLoansField" text="Aktualnie wypożyczone książki" styleClass="label"/>
             <TableView fx:id="borrowedBooksTable" BorderPane.alignment="CENTER">
                 <columns>
                     <TableColumn fx:id="AuthorColumn" text="Autor"/>
@@ -28,7 +28,7 @@
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                 </columnResizePolicy>
             </TableView>
-            <Label id="tableTitle" text="Historia wypożyczeń" styleClass="label"/>
+            <TextField id="tableTitle" fx:id="amountHistoricalLoansField" text="Historia wypożyczeń" styleClass="label"/>
             <TableView fx:id="historicalBorrowsTable" BorderPane.alignment="CENTER">
                 <columns>
                     <TableColumn fx:id="HistoricalAuthorColumn" text="Autor"/>

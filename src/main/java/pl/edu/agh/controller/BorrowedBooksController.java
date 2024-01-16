@@ -17,6 +17,7 @@ import pl.edu.agh.model.extra.LoanDetails;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.users.User;
 import pl.edu.agh.service.BookService;
+import pl.edu.agh.service.UserStatsService;
 import pl.edu.agh.session.UserSession;
 
 import java.io.IOException;
@@ -25,7 +26,10 @@ import java.util.List;
 
 @Component
 public class BorrowedBooksController {
-
+    @FXML
+    public TextField amountCurrentLoansField;
+    @FXML
+    public TextField amountHistoricalLoansField;
     @FXML
     public TableView<LoanDetails> borrowedBooksTable;
     @FXML
@@ -55,10 +59,12 @@ public class BorrowedBooksController {
 
     private final UserSession session = UserSession.getInstance();
     private final BookService bookService;
+    private final UserStatsService userStatsService;
 
     @Autowired
-    public BorrowedBooksController(BookService bookService) {
+    public BorrowedBooksController(BookService bookService, UserStatsService userStatsService) {
         this.bookService = bookService;
+        this.userStatsService = userStatsService;
     }
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -107,6 +113,12 @@ public class BorrowedBooksController {
         HistoricalEndDateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().endLoanDate()));
         HistoricalReturnDateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().returnLoanDate()));
         historicalBorrowsTable.setPlaceholder(new Label("Nie masz żadnych historycznych wypożyczeń"));
+
+        Integer amountCurrentlyBorrowedBooks = userStatsService.getAmountCurrentlyBorrowedBooks(user);
+        amountCurrentLoansField.setText(String.format("Aktualnie wypożyczone książki (%d)", amountCurrentlyBorrowedBooks));
+
+        Integer amountHistoricallyBorrowedBooks = userStatsService.getAmountHistoricallyBorrowedBooks(user);
+        amountHistoricalLoansField.setText(String.format("Historycznie wypożyczone książki (%d)", amountHistoricallyBorrowedBooks));
     }
 
     public void handleBackClickAction() {

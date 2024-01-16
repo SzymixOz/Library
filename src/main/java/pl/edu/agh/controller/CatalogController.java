@@ -1,6 +1,7 @@
 package pl.edu.agh.controller;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +22,9 @@ import pl.edu.agh.service.BookService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CatalogController {
@@ -82,6 +85,7 @@ public class CatalogController {
     }
     @FXML
     public void initialize() {
+
         booksTable.getItems().clear();
         booksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         titleList = initialTitlesList = bookService.getAllTitles();
@@ -91,6 +95,37 @@ public class CatalogController {
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
+
+        List<Integer> titlesIdSortedByRankings = bookService.getTitlesIdSortedByRankings();
+        List<Integer> titlesIdWithBestRankings = titlesIdSortedByRankings.subList(0, Math.min(titlesIdSortedByRankings.size(), 3));
+
+        List<Integer> titlesIdSortedByPopularity = bookService.getTitlesidSortedByPopularity();
+        List<Integer> mostPopularTitlesId = titlesIdSortedByPopularity.subList(0, Math.min(titlesIdSortedByPopularity.size(), 3));
+        List<Integer> leastPopularTitlesId = titlesIdSortedByPopularity.subList(Math.max(0, titlesIdSortedByPopularity.size() - 3), titlesIdSortedByPopularity.size());
+
+        booksTable.setRowFactory(tv -> new TableRow<Title>() {
+            @Override
+            protected void updateItem(Title title, boolean empty) {
+                super.updateItem(title, empty);
+                String styleString = "";
+                if (empty || title == null) {
+                    setStyle("");
+                } else {
+                    int id = title.getTitleId();
+                    if (titlesIdWithBestRankings.contains(id)){
+                        styleString += "-fx-border-color: #9efc95; -fx-border-width: 2px; -fx-padding: 0px; ";
+                    } else {
+                        styleString += "-fx-padding:2px; ";
+                    }
+                    if(mostPopularTitlesId.contains(id)) {
+                        styleString += "-fx-background-color: #e9fa50; ";
+                    } else if(leastPopularTitlesId.contains(id)) {
+                        styleString += "-fx-background-color: #ed6674; ";
+                    }
+                    setStyle(styleString);
+                }
+            }
+        });
 
         initRadioButtons();
         refreshCards();

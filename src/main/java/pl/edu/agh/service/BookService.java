@@ -4,17 +4,16 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.model.books.*;
-import pl.edu.agh.model.books.Book;
 import pl.edu.agh.model.books.CoverType;
 import pl.edu.agh.model.books.Rating;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.extra.HistoricalLoanDetails;
 import pl.edu.agh.model.extra.LoanDetails;
+import pl.edu.agh.model.extra.TitleDetails;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.loans.Loan;
 import pl.edu.agh.model.users.Member;
 import pl.edu.agh.model.users.User;
-import pl.edu.agh.repository.books.BookRepository;
 import pl.edu.agh.repository.books.RatingRepository;
 import pl.edu.agh.repository.books.TitleRepository;
 import pl.edu.agh.repository.loans.HistoricalLoanRepository;
@@ -24,12 +23,12 @@ import pl.edu.agh.validator.BookValidator;
 
 import java.sql.Blob;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class BookService {
-    private final BookRepository bookRepository;
     private final TitleRepository titleRepository;
     private final LoanRepository loanRepository;
     private final MemberRepository memberRepository;
@@ -37,8 +36,7 @@ public class BookService {
     private final RatingRepository ratingRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, TitleRepository titleRepository, LoanRepository loanRepository, MemberRepository memberRepository, HistoricalLoanRepository historicalLoanRepository, RatingRepository ratingRepository) {
-        this.bookRepository = bookRepository;
+    public BookService(TitleRepository titleRepository, LoanRepository loanRepository, MemberRepository memberRepository, HistoricalLoanRepository historicalLoanRepository, RatingRepository ratingRepository) {
         this.titleRepository = titleRepository;
         this.loanRepository = loanRepository;
         this.memberRepository = memberRepository;
@@ -79,29 +77,29 @@ public class BookService {
             return "Niepoprawna ilosc ksiazek";
         }
 
-        Title title_db = new Title(isbnLong, title, author, category, image);
+        Title title_db = new Title(isbnLong, title, author, category, image, softCoverQuantityInt, hardCoverQuantityInt);
         try {
             titleRepository.save(title_db);
         } catch (Exception e) {
             return "Ksiazka o podanym ISBN juz istnieje";
         }
 
-        for (int i = 0; i < softCoverQuantityInt; i++) {
-            Book book = new Book(CoverType.SOFT, title_db);
-            try {
-                bookRepository.save(book);
-            } catch (Exception e) {
-                return "Nie mozna dodac egzemplarza ksiazki";
-            }
-        }
-        for (int i = 0; i < hardCoverQuantityInt; i++) {
-            Book book = new Book(CoverType.HARD, title_db);
-            try {
-                bookRepository.save(book);
-            } catch (Exception e) {
-                return "Nie mozna dodac egzemplarza ksiazki";
-            }
-        }
+//        for (int i = 0; i < softCoverQuantityInt; i++) {
+//            Book book = new Book(CoverType.SOFT, title_db);
+//            try {
+//                bookRepository.save(book);
+//            } catch (Exception e) {
+//                return "Nie mozna dodac egzemplarza ksiazki";
+//            }
+//        }
+//        for (int i = 0; i < hardCoverQuantityInt; i++) {
+//            Book book = new Book(CoverType.HARD, title_db);
+//            try {
+//                bookRepository.save(book);
+//            } catch (Exception e) {
+//                return "Nie mozna dodac egzemplarza ksiazki";
+//            }
+//        }
         return "Ksiazka zostala dodana";
     }
 
@@ -109,22 +107,22 @@ public class BookService {
         return titleRepository.findAll();
     }
 
-    public Long getNumberOfAvailableBooks(int titleId, CoverType coverType) {
-        return bookRepository.countBooksByTitleIdAndCover(titleId, coverType)
-                - bookRepository.countBorrowedBooksByTitleIdAndCover(titleId, coverType);
+    public Integer getNumberOfAvailableBooks(Title title, CoverType coverType) {
+        return (coverType.equals(CoverType.SOFT) ? title.getSoftCoverQuantity() : title.getHardCoverQuantity())
+                - titleRepository.countBorrowedBooksByTitleIdAndCover(title.getTitleId(), coverType);
     }
 
-    private List<Book> findAvailableBooksByTitleId(int titleId, CoverType coverType) {
-        return bookRepository.findAvailableBooksByTitleIdAndCoverType(titleId, coverType);
-    }
+//    private List<Book> findAvailableBooksByTitleId(int titleId, CoverType coverType) {
+//        return titleRepository.findAvailableBooksByTitleIdAndCoverType(titleId, coverType);
+//    }
 
     @Transactional
     public Loan reserveBook(int titleId, CoverType coverType, User user) {
-        List<Book> availableBooks = findAvailableBooksByTitleId(titleId, coverType);
-        if(availableBooks.isEmpty()) return null;
+//        List<Book> availableBooks = findAvailableBooksByTitleId(titleId, coverType);
+//        if(availableBooks.isEmpty()) return null;
 
-        int bookId = availableBooks.get(0).getBookId();
-        Book bookToBorrow = bookRepository.findById(bookId).orElseThrow(RuntimeException::new);
+//        int bookId = availableBooks.get(0).getBookId();
+        Title titleToBorrow = titleRepository.findById(titleId).orElseThrow(RuntimeException::new);
 
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -134,13 +132,13 @@ public class BookService {
 
         Member member = memberRepository.findById(user.getUserId()).orElseThrow(RuntimeException::new);
 
-        Loan loan = new Loan(currentDate, nextMonthDate, member, bookToBorrow);
+        Loan loan = new Loan(currentDate, nextMonthDate, member, titleToBorrow, coverType);
 
         return loanRepository.saveAndFlush(loan);
     }
 
     public List<Rating> findRatingsByTitleId(int title_id) {
-        return titleRepository.findRatingsByTitleId(title_id);
+        return ratingRepository.findRatingsByTitleId(title_id);
     }
 
     public boolean hasUserBorrowedBook(Title title, int userId) {
@@ -170,11 +168,30 @@ public class BookService {
     public HistoricalLoan returnBook(int loanId) {
         Loan loan = loanRepository.findById(loanId).orElseThrow(RuntimeException::new);
 
-        HistoricalLoan historicalLoan = new HistoricalLoan(loan.getStartLoanDate(), loan.getEndLoanDate(), new Date(), loan.getMember(), loan.getBook());
+        HistoricalLoan historicalLoan = new HistoricalLoan(loan.getStartLoanDate(), loan.getEndLoanDate(), new Date(), loan.getMember(), loan.getTitle(), loan.getCoverType());
 
         HistoricalLoan savedHistoricalLoan = historicalLoanRepository.saveAndFlush(historicalLoan);
         loanRepository.deleteByLoanId(loan.getLoanId());
 
         return savedHistoricalLoan;
+    }
+    @Transactional
+    public List<Integer> getTitlesIdSortedByRankings() {
+        List<Title> titles = titleRepository.findAll();
+
+        return titles.stream()
+                .sorted(Comparator.comparingDouble((Title t) -> t.getRatings().stream().mapToDouble(Rating::getRate).average().orElse(0.0))
+                        .reversed())
+                .map(Title::getTitleId)
+                .toList();
+    }
+    @Transactional
+    public List<Integer> getTitlesidSortedByPopularity() {
+        List<Title> titles = titleRepository.findAll();
+
+        return titles.stream()
+                .sorted(Comparator.comparingInt((Title t) -> (t.getLoans().size() + t.getHistoricalLoans().size())).reversed())
+                .map(Title::getTitleId)
+                .toList();
     }
 }

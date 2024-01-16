@@ -27,7 +27,9 @@
     -fx-border-color: #38b8f1;
     -fx-border-radius: 5px;
 }
-
+#column {
+    -fx-pref-height: 30px;
+}
 #selectButton {
     -fx-pref-width: 100;
     -fx-pref-height: 40;
