@@ -16,7 +16,6 @@
             <HBox id="searchBox">
                 <Label text="Wyszukaj książki:" prefWidth="120" />
                 <TextField fx:id="searchTextField" promptText="Wpisz tytuł..." prefWidth="530" />
-                <Button fx:id="searchButton" text="Wyszukaj" onAction="#handleSearchAction" styleClass="button" />
             </HBox>
         </VBox>
     </top>
@@ -59,6 +58,21 @@
             </BorderPane.margin>
         </VBox>
     </right>
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="150.0" BorderPane.alignment="CENTER">
+            <Label text="Filtry" id="filter"/>
+            <Label text="Kategoria" styleClass="label" />
+            <ChoiceBox fx:id="categoryChoiceBox" styleClass="choice-box" prefWidth="100"/>
+            <Label text="Ocena" styleClass="label" />
+            <ChoiceBox fx:id="ratingChoiceBox" styleClass="choice-box" prefWidth="100"/>
+            <Button id="filterButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308"
+                    mnemonicParsing="false" onAction="#handleResetFiltersAction" text="Resetuj filtry">
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="15.0"/>
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </left>
     <stylesheets>
         <URL value="@../styles/CatalogStyles.css" />
     </stylesheets>

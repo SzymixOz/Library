@@ -180,6 +180,7 @@ public class BookService {
         List<Title> titles = titleRepository.findAll();
 
         return titles.stream()
+                .filter(t -> !t.getRatings().isEmpty())
                 .sorted(Comparator.comparingDouble((Title t) -> t.getRatings().stream().mapToDouble(Rating::getRate).average().orElse(0.0))
                         .reversed())
                 .map(Title::getTitleId)
@@ -193,5 +194,8 @@ public class BookService {
                 .sorted(Comparator.comparingInt((Title t) -> (t.getLoans().size() + t.getHistoricalLoans().size())).reversed())
                 .map(Title::getTitleId)
                 .toList();
+    }
+    public Double getTitleAverageRating(Title title) {
+        return title.getRatings().stream().mapToDouble(Rating::getRate).average().orElse(0.0);
     }
 }

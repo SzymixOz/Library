@@ -1,7 +1,10 @@
 package pl.edu.agh.controller;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,13 +20,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.model.books.BookCategory;
+import pl.edu.agh.model.books.Rating;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.service.BookService;
+import pl.edu.agh.session.BooksSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,15 +58,20 @@ public class CatalogController {
     private ScrollPane cardsContainer;
     @FXML
     private FlowPane bookCards;
+    @FXML
+    private ChoiceBox<BookCategory> categoryChoiceBox;
+    @FXML
+    private ChoiceBox<Integer> ratingChoiceBox;
     private Stage primaryStage;
     private ApplicationContext context;
     private final BookService bookService;
-    private List<Title> initialTitlesList;
-    private List<Title> titleList;
-
+    private final BooksSession booksSession;
+    private FilteredList<Title> filteredTitles;
+    private SortedList<Title> sortedTitles;
     @Autowired
-    public CatalogController(BookService bookService) {
+    public CatalogController(BookService bookService, BooksSession booksSession) {
         this.bookService = bookService;
+        this.booksSession = booksSession;
     }
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -85,23 +97,49 @@ public class CatalogController {
     }
     @FXML
     public void initialize() {
-
         booksTable.getItems().clear();
         booksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        titleList = initialTitlesList = bookService.getAllTitles();
-        booksTable.getItems().addAll(titleList);
         AuthorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-        selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
+        ObservableList<Title> initialTitlesList = booksSession.getTitles();
+        filteredTitles = new FilteredList<>(initialTitlesList, p -> true);
+        Predicate<Title> categoryPredicate = title -> {
+            BookCategory category = categoryChoiceBox.getValue();
+            return category == null || title.getCategory().equals(category);
+        };
+        Predicate<Title> searchPredicate = title -> {
+            if(searchTextField.getText() == null) return true;
+            String filter = searchTextField.getText().toLowerCase();
+            return filter.isEmpty() || title.getTitle().toLowerCase().contains(filter);
+        };
+        Predicate<Title> ratingPredicate = title -> {
+            Integer rating = ratingChoiceBox.getValue();
+            return rating == null || bookService.getTitleAverageRating(title) >= rating;
+        };
+        Predicate<Title> combinedPredicate = searchPredicate.and(categoryPredicate).and(ratingPredicate);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredTitles.setPredicate(null);
+            filteredTitles.setPredicate(combinedPredicate);
+        });
+        categoryChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredTitles.setPredicate(null);
+            filteredTitles.setPredicate(combinedPredicate);
+        });
+        ratingChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredTitles.setPredicate(null);
+            filteredTitles.setPredicate(combinedPredicate);
+        });
+        sortedTitles = new SortedList<>(filteredTitles);
+        sortedTitles.comparatorProperty().bind(booksTable.comparatorProperty());
+        sortedTitles.addListener((Change<? extends Title> change) -> refreshCards());
 
-        List<Integer> titlesIdSortedByRankings = bookService.getTitlesIdSortedByRankings();
-        List<Integer> titlesIdWithBestRankings = titlesIdSortedByRankings.subList(0, Math.min(titlesIdSortedByRankings.size(), 3));
+        booksTable.setItems(sortedTitles);
 
-        List<Integer> titlesIdSortedByPopularity = bookService.getTitlesidSortedByPopularity();
-        List<Integer> mostPopularTitlesId = titlesIdSortedByPopularity.subList(0, Math.min(titlesIdSortedByPopularity.size(), 3));
-        List<Integer> leastPopularTitlesId = titlesIdSortedByPopularity.subList(Math.max(0, titlesIdSortedByPopularity.size() - 3), titlesIdSortedByPopularity.size());
+        List<Integer> titlesIdWithBestRankings = booksSession.getTitlesIdWithBestRankings();
+        List<Integer> mostPopularTitlesId = booksSession.getMostPopularTitlesId();
+        List<Integer> leastPopularTitlesId = booksSession.getLeastPopularTitlesId();
 
         booksTable.setRowFactory(tv -> new TableRow<Title>() {
             @Override
@@ -127,13 +165,16 @@ public class CatalogController {
             }
         });
 
+        categoryChoiceBox.getItems().addAll(BookCategory.values());
+        ratingChoiceBox.getItems().addAll(List.of(1, 2, 3, 4, 5));
+        selectButton.disableProperty().bind(Bindings.isEmpty(booksTable.getSelectionModel().getSelectedItems()));
         initRadioButtons();
         refreshCards();
     }
 
     private void refreshCards() {
         bookCards.getChildren().clear();
-        for (Title book : titleList) {
+        for (Title book : sortedTitles) {
             AnchorPane card = createBookCard(book);
             bookCards.getChildren().add(card);
         }
@@ -166,9 +207,27 @@ public class CatalogController {
     }
 
     private AnchorPane createBookCard(Title book) {
+        int id = book.getTitleId();
+        List<Integer> titlesIdWithBestRankings = booksSession.getTitlesIdWithBestRankings();
+        List<Integer> mostPopularTitlesId = booksSession.getMostPopularTitlesId();
+        List<Integer> leastPopularTitlesId = booksSession.getLeastPopularTitlesId();
+        String styleString = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);";
+        if (titlesIdWithBestRankings.contains(id)){
+            styleString += "-fx-border-color: #9efc95; -fx-border-width: 3px; -fx-padding: 2px; ";
+        } else {
+            styleString += "-fx-padding:5px; ";
+        }
+        if(mostPopularTitlesId.contains(id)) {
+            styleString += "-fx-background-color: #e9fa50; ";
+        } else if(leastPopularTitlesId.contains(id)) {
+            styleString += "-fx-background-color: #ed6674; ";
+        } else {
+            styleString += "-fx-background-color: white;";
+        }
+
         AnchorPane card = new AnchorPane();
         card.setPrefSize(180, 280);
-        card.setStyle("-fx-padding: 5px;-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);-fx-background-color: white;");
+        card.setStyle(styleString);
 
         ImageView imageView = null;
         try {
@@ -218,15 +277,9 @@ public class CatalogController {
         handleDetailsAction(booksTable.getSelectionModel().getSelectedItem());
     }
 
-    private void refreshBooksTable() {
-        booksTable.getItems().clear();
-        booksTable.getItems().addAll(titleList);
-    }
-
-    public void handleSearchAction() {
-        String prefix = searchTextField.getText();
-        titleList = initialTitlesList.stream().filter(t -> t.getTitle().startsWith(prefix)).toList();
-        refreshBooksTable();
-        refreshCards();
+    public void handleResetFiltersAction() {
+        searchTextField.setText(null);
+        ratingChoiceBox.setValue(null);
+        categoryChoiceBox.setValue(null);
     }
 }

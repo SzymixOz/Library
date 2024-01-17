@@ -26,7 +26,7 @@ public class Title {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "title")
     private List<HistoricalLoan> historicalLoans;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "title")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "title")
     private List<Rating> ratings;
 
     @Lob
