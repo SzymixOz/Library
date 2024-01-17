@@ -156,7 +156,7 @@ public class CatalogController {
                         styleString += "-fx-padding:2px; ";
                     }
                     if(mostPopularTitlesId.contains(id)) {
-                        styleString += "-fx-background-color: #e9fa50; ";
+                        styleString += "-fx-background-color: #65fa02; ";
                     } else if(leastPopularTitlesId.contains(id)) {
                         styleString += "-fx-background-color: #ed6674; ";
                     }
@@ -218,7 +218,7 @@ public class CatalogController {
             styleString += "-fx-padding:5px; ";
         }
         if(mostPopularTitlesId.contains(id)) {
-            styleString += "-fx-background-color: #e9fa50; ";
+            styleString += "-fx-background-color: #65fa02; ";
         } else if(leastPopularTitlesId.contains(id)) {
             styleString += "-fx-background-color: #ed6674; ";
         } else {

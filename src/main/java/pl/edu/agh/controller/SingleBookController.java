@@ -44,12 +44,13 @@ public class SingleBookController {
     @FXML
     private TextField availableHardTextField;
     @FXML
+    private TextField ratingTextField;
+    @FXML
     private TableView<Rating> ratingTable;
     @FXML
     private TableColumn<Rating, Integer> RateColumn;
     @FXML
     private TableColumn<Rating, String> CommentColumn;
-
     @FXML
     private Button loanButtonSoft;
     @FXML
@@ -103,6 +104,7 @@ public class SingleBookController {
         authorTextField.setText(title.getAuthor());
         titleTextField.setText(title.getTitle());
         categoryTextField.setText(title.getCategory().toString());
+        ratingTextField.setText(bookService.getTitleAverageRating(title) > 0.0 ? bookService.getTitleAverageRating(title).toString() : "Brak ocen");
         availableSoftTextField.setText(numberOfAvailableSoft.toString());
         availableHardTextField.setText(numberOfAvailableHard.toString());
 
