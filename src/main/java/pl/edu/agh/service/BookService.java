@@ -19,6 +19,7 @@ import pl.edu.agh.repository.books.TitleRepository;
 import pl.edu.agh.repository.loans.HistoricalLoanRepository;
 import pl.edu.agh.repository.loans.LoanRepository;
 import pl.edu.agh.repository.users.MemberRepository;
+import pl.edu.agh.session.BooksSession;
 import pl.edu.agh.validator.BookValidator;
 
 import java.sql.Blob;
@@ -34,6 +35,7 @@ public class BookService {
     private final MemberRepository memberRepository;
     private final HistoricalLoanRepository historicalLoanRepository;
     private final RatingRepository ratingRepository;
+
 
     @Autowired
     public BookService(TitleRepository titleRepository, LoanRepository loanRepository, MemberRepository memberRepository, HistoricalLoanRepository historicalLoanRepository, RatingRepository ratingRepository) {
@@ -84,22 +86,6 @@ public class BookService {
             return "Ksiazka o podanym ISBN juz istnieje";
         }
 
-//        for (int i = 0; i < softCoverQuantityInt; i++) {
-//            Book book = new Book(CoverType.SOFT, title_db);
-//            try {
-//                bookRepository.save(book);
-//            } catch (Exception e) {
-//                return "Nie mozna dodac egzemplarza ksiazki";
-//            }
-//        }
-//        for (int i = 0; i < hardCoverQuantityInt; i++) {
-//            Book book = new Book(CoverType.HARD, title_db);
-//            try {
-//                bookRepository.save(book);
-//            } catch (Exception e) {
-//                return "Nie mozna dodac egzemplarza ksiazki";
-//            }
-//        }
         return "Ksiazka zostala dodana";
     }
 
@@ -112,16 +98,8 @@ public class BookService {
                 - titleRepository.countBorrowedBooksByTitleIdAndCover(title.getTitleId(), coverType);
     }
 
-//    private List<Book> findAvailableBooksByTitleId(int titleId, CoverType coverType) {
-//        return titleRepository.findAvailableBooksByTitleIdAndCoverType(titleId, coverType);
-//    }
-
     @Transactional
     public Loan reserveBook(int titleId, CoverType coverType, User user) {
-//        List<Book> availableBooks = findAvailableBooksByTitleId(titleId, coverType);
-//        if(availableBooks.isEmpty()) return null;
-
-//        int bookId = availableBooks.get(0).getBookId();
         Title titleToBorrow = titleRepository.findById(titleId).orElseThrow(RuntimeException::new);
 
         Date currentDate = new Date();

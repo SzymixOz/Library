@@ -36,9 +36,4 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
     @Modifying
     @Query("DELETE FROM Loan l WHERE l.loanId = :loanId")
     void deleteByLoanId(@Param("loanId") int loanId);
-
-    //SELECT t.title_id, title, author, COUNT(hl.loan_id)+COUNT(l.loan_id) AS together FROM title t
-    // JOIN book b ON t.title_id=b.title_id
-    // LEFT JOIN historical_loan hl ON hl.book_id=b.book_id
-    // LEFT JOIN loan l ON l.book_id=b.book_id group by title HAVING COUNT(hl.loan_id)+COUNT(l.loan_id)>0 ORDER BY 4 DESC;
 }

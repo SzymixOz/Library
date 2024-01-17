@@ -3,6 +3,7 @@ package pl.edu.agh.controller;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,12 +18,10 @@ import pl.edu.agh.model.extra.LoanDetails;
 import pl.edu.agh.model.loans.HistoricalLoan;
 import pl.edu.agh.model.users.User;
 import pl.edu.agh.service.BookService;
-import pl.edu.agh.service.UserStatsService;
 import pl.edu.agh.session.UserSession;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class BorrowedBooksController {
@@ -57,14 +56,14 @@ public class BorrowedBooksController {
     private Stage primaryStage;
     private ApplicationContext context;
 
-    private final UserSession session = UserSession.getInstance();
+    private final UserSession session;
+    private ObservableList<LoanDetails> loansList;
+    private ObservableList<HistoricalLoanDetails> historicalLoansList;
     private final BookService bookService;
-    private final UserStatsService userStatsService;
-
     @Autowired
-    public BorrowedBooksController(BookService bookService, UserStatsService userStatsService) {
+    public BorrowedBooksController(UserSession userSession, BookService bookService) {
+        this.session = userSession;
         this.bookService = bookService;
-        this.userStatsService = userStatsService;
     }
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -94,7 +93,7 @@ public class BorrowedBooksController {
 
         borrowedBooksTable.getItems().clear();
         borrowedBooksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        List<LoanDetails> loansList = bookService.getAllUserLoans(user);
+        loansList = session.getLoanDetails();
         borrowedBooksTable.getItems().addAll(loansList);
         AuthorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().title().getAuthor()));
         TitleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().title().getTitle()));
@@ -105,7 +104,7 @@ public class BorrowedBooksController {
         returnButton.disableProperty().bind(Bindings.isEmpty(borrowedBooksTable.getSelectionModel().getSelectedItems()));
 
         historicalBorrowsTable.getItems().clear();
-        List<HistoricalLoanDetails> historicalLoansList = bookService.getAllUserHistoricalLoans(user);
+        historicalLoansList = session.getHistoricalLoanDetails();
         historicalBorrowsTable.getItems().addAll(historicalLoansList);
         HistoricalAuthorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().title().getAuthor()));
         HistoricalTitleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().title().getTitle()));
@@ -114,10 +113,10 @@ public class BorrowedBooksController {
         HistoricalReturnDateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().returnLoanDate()));
         historicalBorrowsTable.setPlaceholder(new Label("Nie masz żadnych historycznych wypożyczeń"));
 
-        Integer amountCurrentlyBorrowedBooks = userStatsService.getAmountCurrentlyBorrowedBooks(user);
+        Integer amountCurrentlyBorrowedBooks = loansList.size();
         amountCurrentLoansField.setText(String.format("Aktualnie wypożyczone książki (%d)", amountCurrentlyBorrowedBooks));
 
-        Integer amountHistoricallyBorrowedBooks = userStatsService.getAmountHistoricallyBorrowedBooks(user);
+        Integer amountHistoricallyBorrowedBooks = historicalLoansList.size();
         amountHistoricalLoansField.setText(String.format("Historycznie wypożyczone książki (%d)", amountHistoricallyBorrowedBooks));
     }
 
@@ -129,11 +128,23 @@ public class BorrowedBooksController {
 
     public void handleReturnAction() {
         LoanDetails loanDetails = borrowedBooksTable.getSelectionModel().getSelectedItem();
-
         HistoricalLoan historicalLoan = bookService.returnBook(loanDetails.loanId());
-
+        session.resetLoans();
         if(historicalLoan != null) {
-            borrowedBooksTable.getItems().remove(borrowedBooksTable.getSelectionModel().getSelectedIndex());
+            loansList = session.getLoanDetails();
+            historicalLoansList = session.getHistoricalLoanDetails();
+
+            borrowedBooksTable.getItems().clear();
+            borrowedBooksTable.getItems().addAll(loansList);
+
+            historicalBorrowsTable.getItems().clear();
+            historicalBorrowsTable.getItems().addAll(historicalLoansList);
         }
+
+        Integer amountCurrentlyBorrowedBooks = loansList.size();
+        amountCurrentLoansField.setText(String.format("Aktualnie wypożyczone książki (%d)", amountCurrentlyBorrowedBooks));
+
+        Integer amountHistoricallyBorrowedBooks = historicalLoansList.size();
+        amountHistoricalLoansField.setText(String.format("Historycznie wypożyczone książki (%d)", amountHistoricallyBorrowedBooks));
     }
 }

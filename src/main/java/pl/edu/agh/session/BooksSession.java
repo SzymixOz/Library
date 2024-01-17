@@ -48,4 +48,20 @@ public class BooksSession {
     public List<Integer> getTitlesIdWithBestRankings() {
         return titlesIdWithBestRankings;
     }
+
+    public void resetTitles() {
+        List<Title> titlesFromDb = bookService.getAllTitles();
+        titles = FXCollections.observableList(titlesFromDb);
+    }
+
+    public void resetBestRatings() {
+        List<Integer> titlesIdSortedByRankings = bookService.getTitlesIdSortedByRankings();
+        titlesIdWithBestRankings = titlesIdSortedByRankings.subList(0, Math.min(titlesIdSortedByRankings.size(), 3));
+    }
+
+    public void resetPopularity() {
+        List<Integer> titlesIdSortedByPopularity = bookService.getTitlesidSortedByPopularity();
+        mostPopularTitlesId = titlesIdSortedByPopularity.subList(0, Math.min(titlesIdSortedByPopularity.size(), 3));
+        leastPopularTitlesId = titlesIdSortedByPopularity.subList(Math.max(0, titlesIdSortedByPopularity.size() - 3), titlesIdSortedByPopularity.size());
+    }
 }

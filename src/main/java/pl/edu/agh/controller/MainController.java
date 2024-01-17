@@ -33,6 +33,11 @@ public class MainController {
     Button BorrowedBooksButton;
     @FXML
     Button SendEmailButton;
+    private final UserSession session;
+
+    public MainController(UserSession session) {
+        this.session = session;
+    }
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -61,7 +66,6 @@ public class MainController {
     }
 
     private void initButtons() {
-        UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         CatalogButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
@@ -114,7 +118,6 @@ public class MainController {
     }
 
     public void handleLogoutClickAction() {
-        UserSession session = UserSession.getInstance();
         session.setUser(null);
         session.setRole(UserRoleEnum.NOT_LOGGED);
         LoginController loginController = context.getBean(LoginController.class);

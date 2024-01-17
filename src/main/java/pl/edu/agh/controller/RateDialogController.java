@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Text;
+import pl.edu.agh.model.books.Rating;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.users.AccountType;
 import pl.edu.agh.model.users.Admin;
@@ -21,6 +22,7 @@ import pl.edu.agh.model.users.Member;
 import pl.edu.agh.repository.books.TitleRepository;
 import pl.edu.agh.service.AdminService;
 import pl.edu.agh.service.BookService;
+import pl.edu.agh.session.BooksSession;
 import pl.edu.agh.session.UserSession;
 
 import java.io.IOException;
@@ -34,13 +36,16 @@ public class RateDialogController {
     private TextField RateField;
     private Title title;
     private Stage dialogStage;
-    private final UserSession session = UserSession.getInstance();
+    private final UserSession session;
 
     private final BookService bookService;
+    private final BooksSession booksSession;
 
     @Autowired
-    public RateDialogController(BookService bookService) {
+    public RateDialogController(BookService bookService, UserSession userSession, BooksSession booksSession) {
         this.bookService = bookService;
+        this.session = userSession;
+        this.booksSession = booksSession;
     }
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -67,7 +72,10 @@ public class RateDialogController {
         int rate = Integer.parseInt(RateField.getText());
         String comment = CommentField.getText();
 
-        bookService.rateBook(title, session.getUser(), rate, comment);
+        Rating rating = bookService.rateBook(title, session.getUser(), rate, comment);
+        if(rating != null) {
+            booksSession.resetBestRatings();
+        }
         dialogStage.close();
     }
 

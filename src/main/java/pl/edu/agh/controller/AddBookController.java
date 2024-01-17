@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.model.books.BookCategory;
 import pl.edu.agh.service.BookService;
+import pl.edu.agh.session.BooksSession;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,12 +50,12 @@ public class AddBookController {
 
     private Blob imageBlob;
 
-    private BookService bookService;
+    private final BookService bookService;
+    private final BooksSession booksSession;
 
-
-    @Autowired
-    public AddBookController(BookService bookService) {
+    public AddBookController(BookService bookService, BooksSession booksSession) {
         this.bookService = bookService;
+        this.booksSession = booksSession;
     }
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -142,6 +143,7 @@ public class AddBookController {
 
         String result = this.bookService.addBook(title, author, isbn, category, imageBlob, softCoverQuantity, hardCoverQuantity);
         showResult(result);
+        booksSession.resetTitles();
     }
 
     private void showResult(String labelText) {

@@ -37,7 +37,11 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
     private AdminService adminService;
     private LibrarianService librarianService;
     private ApplicationContext context;
+    private final UserSession session;
 
+    public LoginController(UserSession session) {
+        this.session = session;
+    }
 
     @Autowired
     public void setMemberService(MemberService memberService) {
@@ -80,7 +84,6 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
         }
     }
     public void handleLoginClickAction() {
-
         String mail = mailField.getText();
         String givenPassword = passwordField.getText();
         User user = new Member();
@@ -106,7 +109,6 @@ public class LoginController implements ApplicationListener<StageReadyEvent> {
             return;
         }
 
-        UserSession session = UserSession.getInstance();
         session.setUser(user);
         session.setRole(role);
 

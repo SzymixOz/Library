@@ -61,12 +61,13 @@ public class SingleBookController {
 
     private Stage primaryStage;
     private ApplicationContext context;
-    private final UserSession session = UserSession.getInstance();
+    private final UserSession session;
     private Title title;
     private final BookService bookService;
     @Autowired
-    public SingleBookController(BookService bookService) {
+    public SingleBookController(BookService bookService, UserSession session) {
         this.bookService = bookService;
+        this.session = session;
     }
 
     public void setTitle(Title title) {
@@ -144,13 +145,18 @@ public class SingleBookController {
 
     public void hadleLoanSoftAction() {
         if(numberOfAvailableSoft < 1L) return;
-        if(bookService.reserveBook(title.getTitleId(), CoverType.SOFT, session.getUser()) != null)
+        if(bookService.reserveBook(title.getTitleId(), CoverType.SOFT, session.getUser()) != null) {
             availableSoftTextField.setText(bookService.getNumberOfAvailableBooks(title, CoverType.SOFT).toString());
+            session.resetLoans();
+        }
     }
     public void hadleLoanHardAction() {
         if(numberOfAvailableHard < 1L) return;
-        if(bookService.reserveBook(title.getTitleId(), CoverType.HARD, session.getUser()) != null)
+        if(bookService.reserveBook(title.getTitleId(), CoverType.HARD, session.getUser()) != null) {
             availableHardTextField.setText(bookService.getNumberOfAvailableBooks(title, CoverType.HARD).toString());
+            session.resetLoans();
+        }
+
     }
 
     public void handleRateAction() {
