@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ import pl.edu.agh.session.BooksSession;
 import pl.edu.agh.session.UserSession;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.function.UnaryOperator;
 
 @Component
@@ -33,7 +35,7 @@ public class RateDialogController {
     @FXML
     private TextField CommentField;
     @FXML
-    private TextField RateField;
+    private ChoiceBox<Integer> RateChoiceBox;
     private Title title;
     private Stage dialogStage;
     private final UserSession session;
@@ -57,19 +59,12 @@ public class RateDialogController {
 
     @FXML
     private void initialize() {
-        RateField.textProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if(newValue instanceof String && !((String)newValue).matches("\\d*")) {
-                    RateField.setText(((String)newValue).replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+        RateChoiceBox.getItems().addAll(List.of(1, 2, 3, 4, 5));
     }
 
     @FXML
     private void handleOkAction(ActionEvent event) {
-        int rate = Integer.parseInt(RateField.getText());
+        int rate = RateChoiceBox.getValue();
         String comment = CommentField.getText();
 
         Rating rating = bookService.rateBook(title, session.getUser(), rate, comment);
