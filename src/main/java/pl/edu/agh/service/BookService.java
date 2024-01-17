@@ -23,10 +23,8 @@ import pl.edu.agh.session.BooksSession;
 import pl.edu.agh.validator.BookValidator;
 
 import java.sql.Blob;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -173,7 +171,24 @@ public class BookService {
                 .map(Title::getTitleId)
                 .toList();
     }
+
+    @Transactional
+    public List<Title> getBestBooksToRead(Set<Title> allTitles) {
+        Set<Integer> allTitlesIds = allTitles.stream().map(Title::getTitleId).collect(Collectors.toSet());
+        Set<Member> allMembers = titleRepository.findMembersByTitle(allTitles);
+
+        Set<HistoricalLoan> historicalLoans = historicalLoanRepository.findAllHistoricalLoansByMembers(allMembers);
+
+        List<Title> titles = historicalLoanRepository.findBestPropositions(allMembers, historicalLoans);
+
+        return titles.stream().filter(t -> !allTitlesIds.contains(t.getTitleId())).collect(Collectors.toList());
+    }
+
     public Double getTitleAverageRating(Title title) {
         return title.getRatings().stream().mapToDouble(Rating::getRate).average().orElse(0.0);
+    }
+
+    public Title getTitleById(int id) {
+        return titleRepository.findById(id).orElse(null);
     }
 }

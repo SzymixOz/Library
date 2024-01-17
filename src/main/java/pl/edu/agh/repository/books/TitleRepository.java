@@ -8,8 +8,11 @@ import pl.edu.agh.model.books.CoverType;
 import pl.edu.agh.model.books.Rating;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.extra.TitleDetails;
+import pl.edu.agh.model.users.Member;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public interface TitleRepository extends JpaRepository<Title, Integer> {
     @Query("SELECT COUNT(t) FROM Title t")
@@ -21,16 +24,8 @@ public interface TitleRepository extends JpaRepository<Title, Integer> {
     Integer countBorrowedBooksByTitleIdAndCover(@Param("titleId") int titleId,
                                                 @Param("coverType") CoverType coverType);
 
-    //    @Query("SELECT b FROM Book b WHERE b.title.titleId = :titleId " +
-//            "AND b.coverType = :coverType " +
-//            "AND NOT EXISTS (SELECT l.book FROM Loan l WHERE l.book = b)")
-//    List<Book> findAvailableBooksByTitleIdAndCoverType(@Param("titleId") int titleId,
-//                                                       @Param("coverType") CoverType coverType);
-//    @Query("SELECT b FROM Book b WHERE b.title.titleId = :titleId " +
-//            "AND b.coverType = :coverType " +
-//            "AND NOT EXISTS (SELECT l.book FROM Loan l WHERE l.book = b)")
-//    List<Book> findAvailableBooksByTitleIdAndCoverType(@Param("titleId") int titleId,
-//                                                       @Param("coverType") CoverType coverType);
+    @Query("SELECT DISTINCT hl.member FROM HistoricalLoan hl WHERE hl.title IN :titles")
+    Set<Member> findMembersByTitle(@Param("titles") Set<Title> titles);
 
     @Query("SELECT (SUM(softCoverQuantity) + SUM(hardCoverQuantity)) FROM Title t")
     Integer getAmountOfAllBooks();

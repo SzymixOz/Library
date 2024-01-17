@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.agh.controller.CatalogController"
-            prefWidth="1000" prefHeight="600">
+            prefWidth="1000" prefHeight="900">
     <top>
         <VBox>
             <Label id="titleLabel" text="Katalog" styleClass="label"/>
@@ -21,7 +21,7 @@
     </top>
     <center>
         <VBox id="centerVBox">
-            <TableView fx:id="booksTable" BorderPane.alignment="CENTER">
+            <TableView fx:id="booksTable" prefHeight="700" BorderPane.alignment="CENTER">
                 <columns>
                     <TableColumn id="column" fx:id="AuthorColumn" text="Autor"/>
                     <TableColumn id="column" fx:id="TitleColumn" text="Tytuł"/>
@@ -32,7 +32,7 @@
                 </columnResizePolicy>
             </TableView>
             <ScrollPane fx:id="cardsContainer" fitToWidth="true" fitToHeight="true">
-                <FlowPane fx:id="bookCards" prefWidth="800" prefHeight="600" hgap="25" vgap="25" alignment="CENTER"/>
+                <FlowPane fx:id="bookCards" prefWidth="800" prefHeight="700" hgap="25" vgap="25" alignment="CENTER"/>
             </ScrollPane>
         </VBox>
     </center>

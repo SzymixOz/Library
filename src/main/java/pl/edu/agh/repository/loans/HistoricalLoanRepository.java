@@ -7,9 +7,11 @@ import pl.edu.agh.model.response.IBookResponse;
 import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.extra.HistoricalLoanDetails;
 import pl.edu.agh.model.loans.HistoricalLoan;
+import pl.edu.agh.model.users.Member;
 import pl.edu.agh.model.users.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface HistoricalLoanRepository extends JpaRepository<HistoricalLoan, Integer> {
     @Query("SELECT COUNT(hl) > 0 FROM HistoricalLoan hl WHERE hl.title = :title AND hl.member.userId = :userId")
@@ -18,11 +20,17 @@ public interface HistoricalLoanRepository extends JpaRepository<HistoricalLoan, 
     @Query("SELECT l.title.title as title, count(*) as amount FROM HistoricalLoan l GROUP BY l.title ORDER BY count(*) DESC")
     List<IBookResponse> findTheMostFrequentlyBorrowedBooks();
 
-    @Query("SELECT l.title.title as title, count(*) as amount FROM HistoricalLoan l WHERE l.member=:user GROUP BY l.title ORDER BY count(*) DESC")
-    List<IBookResponse> findTheMostFrequentlyBorrowedBooksByUser(@Param("user") User user);
+    @Query("SELECT DISTINCT hl FROM HistoricalLoan hl WHERE hl.member IN :members")
+    Set<HistoricalLoan> findAllHistoricalLoansByMembers(@Param("members") Set<Member> members);
 
-    @Query("SELECT COUNT(l) FROM HistoricalLoan l where l.member=:user")
-    Integer getAmountHistoricallyBorrowedBooksByUser(@Param ("user") User user);
+    @Query("SELECT DISTINCT hl.title FROM HistoricalLoan hl " +
+            "WHERE hl.member IN :members AND hl IN :historicalLoans " +
+            "GROUP BY hl.title " +
+            "ORDER BY COUNT(hl) DESC")
+    List<Title> findBestPropositions(
+            @Param("members") Set<Member> members,
+            @Param("historicalLoans") Set<HistoricalLoan> historicalLoans
+    );
     @Query("SELECT new pl.edu.agh.model.extra.HistoricalLoanDetails(h.title, h.startLoanDate, h.endLoanDate, h.returnLoanDate) FROM HistoricalLoan h WHERE h.member.userId = :userId")
     List<HistoricalLoanDetails> findAllHistoricalLoansByUserId(@Param("userId") long userId);
 }

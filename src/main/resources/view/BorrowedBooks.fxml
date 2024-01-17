@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.agh.controller.BorrowedBooksController"
-            prefWidth="1000" prefHeight="600">
+            prefWidth="1000" prefHeight="900">
     <top>
         <VBox>
             <Label id="titleLabel" text="Wypożyczone książki" styleClass="label"/>
@@ -41,6 +41,21 @@
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                 </columnResizePolicy>
             </TableView>
+            <VBox id="stats">
+                <Label id="statsLabel" text="Ciekawostki i statystyki" styleClass="label"/>
+                <HBox>
+                    <TextField text="Najczęściej czytany gatunek: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
+                    <TextField fx:id="mostPopularCategory" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
+                </HBox>
+                <HBox>
+                    <TextField text="Najbardziej zaczytany miesiąc: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
+                    <TextField fx:id="bestMonth" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
+                </HBox>
+                <Label id="statsLabel" text="Polecane dla Ciebie" styleClass="label"/>
+                <ScrollPane fx:id="cardsContainer" fitToWidth="true" fitToHeight="true">
+                    <FlowPane fx:id="bookCards" prefWidth="800" prefHeight="600" hgap="25" vgap="25" alignment="CENTER"/>
+                </ScrollPane>
+            </VBox>
         </VBox>
     </center>
     <right>
