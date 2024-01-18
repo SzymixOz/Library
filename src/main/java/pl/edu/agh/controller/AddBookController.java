@@ -163,6 +163,9 @@ public class AddBookController {
         authorField.setText(null);
         isbnField.setText(null);
         categoryChoiceBox.setValue(null);
+        softCoverQuantityField.setText(null);
+        hardCoverQuantityField.setText(null);
+        imageView.setImage(null);
     }
 
     public void handleBackClickAction() {
