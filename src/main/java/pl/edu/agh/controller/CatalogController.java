@@ -116,7 +116,7 @@ public class CatalogController {
         };
         Predicate<Title> ratingPredicate = title -> {
             Integer rating = ratingChoiceBox.getValue();
-            return rating == null || bookService.getTitleAverageRating(title) >= rating;
+            return rating == null || bookService.getTitleAverageRating(title.getTitleId()) >= rating;
         };
         Predicate<Title> combinedPredicate = searchPredicate.and(categoryPredicate).and(ratingPredicate);
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {

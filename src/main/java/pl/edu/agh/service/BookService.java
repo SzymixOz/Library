@@ -184,7 +184,8 @@ public class BookService {
         return titles.stream().filter(t -> !allTitlesIds.contains(t.getTitleId())).collect(Collectors.toList());
     }
 
-    public Double getTitleAverageRating(Title title) {
+    public Double getTitleAverageRating(int titleId) {
+        Title title = getTitleById(titleId);
         return title.getRatings().stream().mapToDouble(Rating::getRate).average().orElse(0.0);
     }
 

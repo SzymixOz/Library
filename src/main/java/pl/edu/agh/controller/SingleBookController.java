@@ -105,7 +105,8 @@ public class SingleBookController {
         authorTextField.setText(title.getAuthor());
         titleTextField.setText(title.getTitle());
         categoryTextField.setText(title.getCategory().toString());
-        ratingTextField.setText(bookService.getTitleAverageRating(title) > 0.0 ? bookService.getTitleAverageRating(title).toString() : "Brak ocen");
+        Double avg = bookService.getTitleAverageRating(title.getTitleId());
+        ratingTextField.setText(avg > 0.0 ? avg.toString() : "Brak ocen");
         availableSoftTextField.setText(numberOfAvailableSoft.toString());
         availableHardTextField.setText(numberOfAvailableHard.toString());
 
@@ -161,6 +162,8 @@ public class SingleBookController {
 
     public void handleRateAction() {
         showRateAddingDialog();
+        Double avg = bookService.getTitleAverageRating(title.getTitleId());
+        ratingTextField.setText(avg > 0.0 ? avg.toString() : "Brak ocen");
     }
 
     public void showRateAddingDialog() {
