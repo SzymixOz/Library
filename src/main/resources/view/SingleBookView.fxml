@@ -11,7 +11,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.agh.controller.SingleBookController"
-            prefWidth="1000" prefHeight="600">
+            prefWidth="1000" prefHeight="900">
     <top>
         <VBox>
             <Button id="backButton" text="Powrót" onAction="#handleBackClickAction" styleClass="button" />
@@ -29,7 +29,14 @@
                     <TextField text="Tytuł: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
                     <TextField fx:id="titleTextField" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
                 </HBox>
-
+                <HBox>
+                    <TextField text="Gatunek: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
+                    <TextField fx:id="categoryTextField" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
+                </HBox>
+                <HBox>
+                    <TextField text="Ocena: " id="name" editable="false" mouseTransparent="true" focusTraversable="false" />
+                    <TextField fx:id="ratingTextField" id="content" editable="false" mouseTransparent="true" focusTraversable="false" />
+                </HBox>
                 <TextField text="Liczba dostępnych książek: " id="coverType"  editable="false" mouseTransparent="true" focusTraversable="false"/>
                 <HBox>
                     <TextField text="w miękkiej oprawce: " id="coverTypeName" editable="false" mouseTransparent="true" focusTraversable="false"/>

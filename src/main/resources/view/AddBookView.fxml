@@ -9,7 +9,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.agh.controller.AddBookController"
-            prefWidth="1000" prefHeight="600">
+            prefWidth="1000" prefHeight="900">
     <top>
         <VBox>
             <Label id="titleLabel" text="Dodaj książkę" styleClass="label"/>

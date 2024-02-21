@@ -6,7 +6,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="pl.edu.agh.controller.LibrarianStatsController"
-            prefWidth="1000" prefHeight="600">
+            prefWidth="1000" prefHeight="900">
     <top>
         <VBox>
             <Label id="titleLabel" text="Statystyki wypożyczeń" styleClass="label"/>

@@ -1,6 +1,6 @@
 #centerVBox {
     -fx-alignment: CENTER;
-    -fx-max-height: 900;
+    -fx-max-height: 750;
     -fx-max-width: 650;
     -fx-background-color: #38b8f1;
     -fx-background-radius: 10;
@@ -21,7 +21,7 @@
 
 #name {
     -fx-font-size: 16px;
-    -fx-pref-width: 75px;
+    -fx-pref-width: 90px;
     -fx-pref-height: 50px;
 
     -fx-border-insets: 10px 0;
@@ -32,7 +32,7 @@
     -fx-alignment: CENTER;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-pref-width: 555px;
+    -fx-pref-width: 540px;
     -fx-pref-height: 50px;
 
     -fx-border-insets: 10px 0;

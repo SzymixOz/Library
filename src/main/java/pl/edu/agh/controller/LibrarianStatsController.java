@@ -14,7 +14,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.model.response.IBookResponse;
 import pl.edu.agh.service.LibrarianStatsService;
-
 import java.io.IOException;
 import java.util.List;
 

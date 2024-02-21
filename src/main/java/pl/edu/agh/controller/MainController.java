@@ -30,11 +30,14 @@ public class MainController {
     @FXML
     Button ShowStatsLibrarianButton;
     @FXML
-    Button ShowStatsUserButton;
-    @FXML
     Button BorrowedBooksButton;
     @FXML
     Button SendEmailButton;
+    private final UserSession session;
+
+    public MainController(UserSession session) {
+        this.session = session;
+    }
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -63,7 +66,6 @@ public class MainController {
     }
 
     private void initButtons() {
-        UserSession session = UserSession.getInstance();
         UserRoleEnum role = session.getRole();
         CatalogButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         CatalogButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
@@ -75,8 +77,6 @@ public class MainController {
         AdminViewButton.setManaged(role == UserRoleEnum.ADMIN);
         ShowStatsLibrarianButton.setVisible(role == UserRoleEnum.LIBRARIAN);
         ShowStatsLibrarianButton.setManaged(role == UserRoleEnum.LIBRARIAN);
-        ShowStatsUserButton.setVisible(role == UserRoleEnum.MEMBER);
-        ShowStatsUserButton.setManaged(role == UserRoleEnum.MEMBER);
         LogoutButton.setVisible(role != UserRoleEnum.NOT_LOGGED);
         LogoutButton.setManaged(role != UserRoleEnum.NOT_LOGGED);
         SendEmailButton.setVisible(role == UserRoleEnum.LIBRARIAN);
@@ -117,14 +117,7 @@ public class MainController {
         librarianStatsController.loadView();
     }
 
-    public void handleShowStatsUserClickAction() {
-        UserStatsController userStatsController = context.getBean(UserStatsController.class);
-        userStatsController.setPrimaryStage(primaryStage);
-        userStatsController.loadView();
-    }
-
     public void handleLogoutClickAction() {
-        UserSession session = UserSession.getInstance();
         session.setUser(null);
         session.setRole(UserRoleEnum.NOT_LOGGED);
         LoginController loginController = context.getBean(LoginController.class);

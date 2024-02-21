@@ -72,6 +72,15 @@ znajduje się w pliku `AddBookView.fxml` ze stylami w pliku `AddBookStyles.css`
 Analogicznie mamy jeszcze klasy `LoginController`, `AdminController`, `CatalogController`, `MainController` i odpowiadające im
 pliki fxml oraz css. Każda z tych klas odpowiada za wyświetlenie widoku oraz związane z nim akcje, zgodnie z nazwą klasy.
 
+Został dodany widok katalogu z kontrolerem `CatalogController` za wygląd naszego widoku odpowiada 
+`CatalogStyles.css` i `CatalogView.fxml`. Widok możemy zobaczyć w dwóch postaciach:
+widok tabeli oraz widok kart. Z obu tych widokow mozemy przejsc na szczegóły danej książki.
+Z tabeli robimy to przy pomocy przycisku "wybierz" natomiast w przypadku kart wystarczy nacisnąć
+na obrazku książki, której chcemy się przyjrzeć. Jest także możliwość wyszukiwania książek po tytule.
+
+Widok szczegółów tworzony jest przy pomocy `SingleBookView.fxml` i `SingleBookStyles.css`. Za budowę widoku jest odpowiedzialny
+kontroler `SingleBookController`. Na tym widoku możemy dodać naszą ocene oraz pozostawić komentarz.
+Taka mozliwość pojawia się jednak tylko jeśli dana książka była przez nas wcześniej wypożyczona.
 
 ## Pakiet validator
 W pakiecie validator znajduje się klasa `UserValidator` pozwalająca na walidację danych wprowadzanych przez użytkownika.
