@@ -1,7 +1,7 @@
 
 #centerVBox {
     -fx-alignment: CENTER;
-    -fx-max-height: 500;
+    -fx-max-height: 750;
     -fx-max-width: 650;
     -fx-background-color: #38b8f1;
     -fx-background-radius: 10;
@@ -27,7 +27,14 @@
     -fx-border-color: #38b8f1;
     -fx-border-radius: 5px;
 }
-
+#column {
+    -fx-pref-height: 30px;
+}
+#filter {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0;
+}
 #selectButton {
     -fx-pref-width: 100;
     -fx-pref-height: 40;
@@ -35,6 +42,12 @@
     -fx-text-fill: black;
     -fx-font-size: 17px;
     -fx-font-weight: bold;
+}
+#filterButton {
+    -fx-pref-width: 100;
+    -fx-pref-height: 30;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
 }
 #singleBook {
     -fx-pref-width: 200;

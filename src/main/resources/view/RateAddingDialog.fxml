@@ -34,11 +34,11 @@
                     </GridPane.margin>
                 </TextField>
 
-                <TextField fx:id="RateField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <ChoiceBox fx:id="RateChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets bottom="0.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
-                </TextField>
+                </ChoiceBox>
             </children>
         </GridPane>
     </center>

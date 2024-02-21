@@ -1,7 +1,8 @@
 package pl.edu.agh.model.loans;
 
 import jakarta.persistence.*;
-import pl.edu.agh.model.books.Book;
+import pl.edu.agh.model.books.CoverType;
+import pl.edu.agh.model.books.Title;
 import pl.edu.agh.model.users.Member;
 
 import java.util.Date;
@@ -14,25 +15,28 @@ public class HistoricalLoan {
     private Date startLoanDate;
     private Date endLoanDate;
     private Date returnLoanDate;
+    @Enumerated(EnumType.STRING)
+    private CoverType coverType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", referencedColumnName = "userId")
     private Member member;
 
-    public HistoricalLoan(Date startLoanDate, Date endLoanDate, Date returnLoanDate, Member member, Book book) {
+    public HistoricalLoan(Date startLoanDate, Date endLoanDate, Date returnLoanDate, Member member, Title title, CoverType coverType) {
         this.startLoanDate = startLoanDate;
         this.endLoanDate = endLoanDate;
         this.returnLoanDate = returnLoanDate;
         this.member = member;
-        this.book = book;
+        this.title = title;
+        this.coverType = coverType;
     }
 
     public HistoricalLoan() {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="book_id", referencedColumnName = "bookId")
-    private Book book;
+    @JoinColumn(name="title_id", referencedColumnName = "titleId")
+    private Title title;
 
     public int getLoanId() {
         return loanId;
@@ -74,11 +78,19 @@ public class HistoricalLoan {
         this.member = member;
     }
 
-    public Book getBook() {
-        return book;
+    public Title getTitle() {
+        return title;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
+    public CoverType getCoverType() {
+        return coverType;
+    }
+
+    public void setCoverType(CoverType coverType) {
+        this.coverType = coverType;
     }
 }
